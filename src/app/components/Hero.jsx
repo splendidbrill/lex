@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import Image from "next/image";
 
 const Hero = () => {
   return (
@@ -13,13 +14,14 @@ const Hero = () => {
                 title=""
                 className="flex rounded outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
               >
-                {/* <img
+                <Image
+                  src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=100&h=32&fit=crop"
+                  alt="Lex Logo"
+                  width={100}
+                  height={32}
                   className="w-auto h-8"
-                //   src="https://cdn.rareblocks.xyz/collection/clarity/images/logvg"
-                
-                  alt="Lex"
-                /> */}
-                <h3>Lex</h3>
+                  priority
+                />
               </a>
             </div>
 

@@ -24,3 +24,56 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 } */
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 4rem;
+  max-width: 80rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+@media (min-width: 1024px) {
+  .container {
+    margin-top: 2.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+.anchor-hover {
+  border-bottom-width: 1px;
+  border-style: dotted;
+  border-top-color: #d1d5db;
+  border-bottom-color: #d1d5db;
+}
+.anchor-hover:hover {
+  border-style: solid;
+  border-color: #6b7280;
+}
+.gradient-hover-outer {
+  background-color: #e2e8f0;
+  padding: 1px;
+}
+.gradient-hover-outer:hover {
+  background-image: linear-gradient(to bottom right, #fecaca, #e9d5ff, #fef08a);
+}
+.gradient-hover-inner {
+  background-color: #f8fafc;
+}
+.group:hover .gradient-hover-inner {
+  background-image: linear-gradient(to bottom right, #fef2f2, #faf5ff, #fefce8);
+}
+.h2-style {
+  max-width: 42rem;
+  font-size: 3rem;
+  line-height: 1.5;
+}
+@media (min-width: 640px) {
+  .h2-style {
+    font-weight: 600;
+  }
+}
+.font-display {
+  font-family: Poppins, sans-serif;
+}
