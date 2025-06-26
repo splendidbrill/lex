@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import Navbar from "./Navbar";
 import Steps from "./Steps";
+import Features from "./Features";
+import { FAQ } from "./FAQ";
 
 
 
@@ -66,7 +68,8 @@ export const Hero2 = () => {
           </div>
         </div>
         <Steps />
-        
+        <Features />
+        <FAQ />
       </main>
     </div>
   );
