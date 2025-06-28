@@ -1,4 +1,6 @@
 "use client";
+import { useSession } from "@supabase/auth-helpers-react";
+import { useRouter } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 
 const initialPanels = [
@@ -18,6 +20,17 @@ const aiAgents = [
 ];
 
 export default function WorkspacePage() {
+  const session = useSession();
+  const router = useRouter();
+  
+
+  // if (!session) return null;
+  if (session === undefined) return null; // session is still loading
+  if (!session) {
+    router.replace("/signin");
+    return null;
+  }
+
   const [panels, setPanels] = useState(initialPanels);
   const [zIndexCounter, setZIndexCounter] = useState(initialPanels.length);
   const [selectedAgents, setSelectedAgents] = useState(["a1", "a3"]);
@@ -29,10 +42,28 @@ export default function WorkspacePage() {
   const [showSidebar, setShowSidebar] = useState(true);
   const gridRef = useRef();
 
+  // useEffect(() => {
+  //   if (session === undefined) return; // session still loading
+  //   if (!session) router.replace("/signin");
+  // }, [session, router]);
+
+
+
+  // if (!session) {
+  //   // Show nothing while redirecting/loading
+  //   return null;
+  // }
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("lex-all-layouts") || "{}");
     setAllLayouts(saved);
   }, []);
+  //   useEffect(() => {
+  //   const saved = JSON.parse(localStorage.getItem("lex-all-layouts") || "{}");
+  //   setAllLayouts(saved);
+  // }, []);
+
+
+
 
   const saveAllLayouts = (obj) => {
     localStorage.setItem("lex-all-layouts", JSON.stringify(obj));
