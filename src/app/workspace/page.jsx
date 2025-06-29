@@ -1,5 +1,5 @@
 "use client";
-import { useSession } from "@supabase/auth-helpers-react";
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 
@@ -22,24 +22,9 @@ const aiAgents = [
 export default function WorkspacePage() {
   const session = useSession();
   const router = useRouter();
+  const supabase = useSupabaseClient();
   
-
-  // if (!session) return null;
-  // if (session === undefined) return null; // session is still loading
-  // if (!session) {
-  //   router.replace("/signin");
-  //   return null;
-  // }
-  useEffect(() => {
-  if (session === null) {
-    router.replace("/signin");
-  }
-}, [session, router]);
-
-if (session === undefined || session === null) {
-  return null; // Optional: add spinner
-}
-
+  
 
   const [panels, setPanels] = useState(initialPanels);
   const [zIndexCounter, setZIndexCounter] = useState(initialPanels.length);
@@ -52,6 +37,32 @@ if (session === undefined || session === null) {
   const [showSidebar, setShowSidebar] = useState(true);
   const gridRef = useRef();
 
+   useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem("lex-all-layouts") || "{}");
+    setAllLayouts(saved);
+  }, []);
+  //   useEffect(() => {
+  //   const saved = JSON.parse(localStorage.getItem("lex-all-layouts") || "{}");
+  //   setAllLayouts(saved);
+  // }, []);
+
+  // if (!session) return null;
+  // if (session === undefined) return null; // session is still loading
+  // if (!session) {
+  //   router.replace("/signin");
+  //   return null;
+  // }
+  useEffect(() => {
+  if (session === null) {
+    router.replace("/");
+  }
+}, [session, router]);
+
+if (session === undefined || session === null) {
+  return null; // Optional: add spinner
+}
+
+
   // useEffect(() => {
   //   if (session === undefined) return; // session still loading
   //   if (!session) router.replace("/signin");
@@ -63,20 +74,17 @@ if (session === undefined || session === null) {
   //   // Show nothing while redirecting/loading
   //   return null;
   // }
-  useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("lex-all-layouts") || "{}");
-    setAllLayouts(saved);
-  }, []);
-  //   useEffect(() => {
-  //   const saved = JSON.parse(localStorage.getItem("lex-all-layouts") || "{}");
-  //   setAllLayouts(saved);
-  // }, []);
+ 
 
 
 
 
   const saveAllLayouts = (obj) => {
     localStorage.setItem("lex-all-layouts", JSON.stringify(obj));
+  };
+  const handleQuit = async () => {
+    await supabase.auth.signOut();
+    router.push("/");
   };
 
   const showToast = (msg) => {
@@ -180,7 +188,7 @@ if (session === undefined || session === null) {
         <div className="flex space-x-2 relative">
           <button onClick={openSaveModal} className="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded">Save layout</button>
           <button onClick={() => setShowDropdown(!showDropdown)} className="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded">All Saved Layouts</button>
-          <button className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded">Quit to home</button>
+          <button onClick={handleQuit} className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded">Quit to home</button>
         </div>
         {showDropdown && (
           <div className="origin-top-right absolute right-4 mt-10 bg-white text-black rounded shadow-lg z-50">
