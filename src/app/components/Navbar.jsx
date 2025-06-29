@@ -193,22 +193,7 @@ const Navbar = () => {
           </Link>
 
           {/* Conditional rendering for Desktop: Login vs Logout */}
-          {isMounted && (
-            <>
-              {!session ? (
-                <Link href="/signin" className="font-medium hover:text-primary">
-                  Login
-                </Link>
-              ) : (
-                <button
-                  onClick={handleLogout}
-                  className="font-medium hover:text-primary"
-                >
-                  Logout
-                </button>
-              )}
-            </>
-          )}
+        
         </div>
         <div className="hidden lg:flex flex-1 justify-end items-center gap-3">
           {isMounted && !session ? (
@@ -228,11 +213,20 @@ const Navbar = () => {
               </Link>
             </>
           ) : isMounted && session ? (
-            <div className="font-medium text-gray-700">
-              Hi, {session.user.email?.split("@")[0]}
-            </div>
+            <>
+              <span className="font-medium text-gray-700 mr-3">
+                Hi, {session.user.email?.split("@")[0]}
+              </span>
+              <button
+                onClick={handleLogout}
+                className="flex gap-2 items-center border border-red-500 text-red-600 px-6 py-2 rounded-lg hover:border-red-700 cursor-pointer"
+              >
+                <span className="font-display font-medium">Logout</span>
+              </button>
+            </>
           ) : null}
         </div>
+
 
         <button className="p-2 lg:hidden" onClick={handleMenu}>
           <i className="fa-solid fa-bars text-gray-600"></i>
@@ -242,9 +236,8 @@ const Navbar = () => {
         {isMounted && (
           <div
             id="nav-dialog"
-            className={`${
-              isMenuOpen ? "" : "hidden"
-            } fixed z-10 md:hidden bg-white inset-0 p-3`}
+            className={`${isMenuOpen ? "" : "hidden"
+              } fixed z-10 md:hidden bg-white inset-0 p-3`}
           >
             {/* ... mobile nav content ... */}
           </div>

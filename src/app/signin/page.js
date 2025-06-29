@@ -149,19 +149,42 @@ const onSubmit = async (e) => {
   }
 };
 
+// const signInWithGoogle = async () => {
+//   setLoading(true);
+//   const { error } = await supabase.auth.signInWithOAuth({
+//     provider: "google",
+//     options: {
+//       redirectTo: `${location.origin}/welcome`,
+//     },
+//   });
+//   if (error) {
+//     alert(error.message);
+//     setLoading(false);
+//   }
+// };
+
 const signInWithGoogle = async () => {
   setLoading(true);
+
+  if (typeof window === "undefined") {
+    console.error("This code must run in the browser.");
+    setLoading(false);
+    return;
+  }
+
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${location.origin}/welcome`,
+      redirectTo: `${window.location.origin}/welcome`,
     },
   });
+
   if (error) {
     alert(error.message);
     setLoading(false);
   }
 };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">

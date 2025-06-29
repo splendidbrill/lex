@@ -25,11 +25,21 @@ export default function WorkspacePage() {
   
 
   // if (!session) return null;
-  if (session === undefined) return null; // session is still loading
-  if (!session) {
+  // if (session === undefined) return null; // session is still loading
+  // if (!session) {
+  //   router.replace("/signin");
+  //   return null;
+  // }
+  useEffect(() => {
+  if (session === null) {
     router.replace("/signin");
-    return null;
   }
+}, [session, router]);
+
+if (session === undefined || session === null) {
+  return null; // Optional: add spinner
+}
+
 
   const [panels, setPanels] = useState(initialPanels);
   const [zIndexCounter, setZIndexCounter] = useState(initialPanels.length);
