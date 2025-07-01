@@ -45,7 +45,7 @@ export const Hero2 = () => {
                 <p>🏆 Succeed</p>
               </div>
             </div>
-            <h1 className="text-4xl font-semibold leading-snug mt-4 sm:text-6xl">
+            <h1 className="text-4xl font-semibold leading-snug mt-4 sm:text-6xl text-center">
               Lex Bot
               <br />
               {/* Build Businesses in Mintues */}
