@@ -5,8 +5,20 @@ import Navbar from "./Navbar";
 import Steps from "./Steps";
 import Features from "./Features";
 import { FAQ } from "./FAQ";
+import CTA from "./CTA";
+
 
 export const Hero2 = () => {
+  const scrollToCTA = () => {
+    const ctaElement = document.getElementById('cta');
+    if (ctaElement) {
+      ctaElement.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
   return (
     <div>
       <Navbar />
@@ -45,7 +57,7 @@ export const Hero2 = () => {
                 <p>🏆 Succeed</p>
               </div>
             </div>
-            <h1 className="text-4xl font-semibold leading-snug mt-4 sm:text-6xl">
+            <h1 className="text-4xl font-semibold leading-snug mt-4 sm:text-6xl text-center">
               Lex Bot
               <br />
               {/* Build Businesses in Mintues */}
@@ -66,10 +78,17 @@ export const Hero2 = () => {
               id="buttons-container"
               className="mt-12 flex gap-4 flex-col sm:flex-row"
             >
-              <button className="px-8 py-3 font-semibold rounded-lg text-white bg-blue-800 shadow-sm hover:bg-opacity-90">
+              <button 
+                onClick={scrollToCTA}
+                className="px-8 py-3 font-semibold rounded-lg text-white bg-blue-800 shadow-sm hover:bg-opacity-90"
+                suppressHydrationWarning={true}
+              >
                 Join Waitlist
               </button>
-              <button className="px-8 py-3 font-semibold rounded-lg bg-white border border-gray-400 hover:border-gray-800">
+              <button 
+                className="px-8 py-3 font-semibold rounded-lg bg-white border border-gray-400 hover:border-gray-800"
+                suppressHydrationWarning={true}
+              >
                 Read About Us
               </button>
             </div>
@@ -78,6 +97,7 @@ export const Hero2 = () => {
         <Steps />
         <Features />
         <FAQ />
+        <CTA />
       </main>
     </div>
   );
