@@ -126,31 +126,32 @@
 
 // export default Navbar
 
+
+
 "use client";
-import React, { useState, useEffect } from "react"; // 1. Import useEffect
+import React, { useState, useEffect } from "react";
 import { SiAuth0 } from "react-icons/si";
+import { HiMenu, HiX } from "react-icons/hi";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // 2. Add a state to track if the component is mounted
   const [isMounted, setIsMounted] = useState(false);
 
   const session = useSession();
   const supabase = useSupabaseClient();
   const router = useRouter();
 
-  // 3. Use useEffect to set isMounted to true after the component mounts
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   const handleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    setIsMenuOpen((prev) => !prev);
   };
 
   const handleLogout = async () => {
@@ -159,16 +160,11 @@ const Navbar = () => {
     router.refresh();
   };
 
-  // With this setup, the server will render nothing for the auth buttons.
-  // The client will also render nothing on its first pass.
-  // After mounting, isMounted becomes true, and the correct buttons will appear.
-  // This avoids the mismatch.
-
   return (
     <div>
       <nav className="p-3 flex bg-white justify-between items-center fixed top-0 left-0 right-0 z-20 shadow-md">
-        <a href="#" id="brand" className="flex gap-2 items-center flex-1">
-          {/* ... Brand logo and name ... */}
+        {/* Brand */}
+        <a href="#" className="flex gap-2 items-center flex-1">
           <Image
             className="object-cover"
             src="/assets/asset 0.png"
@@ -178,23 +174,16 @@ const Navbar = () => {
           />
           <span className="text-lg font-medium font-display">ToDesktop</span>
         </a>
-        <div id="nav-menu" className="hidden lg:flex gap-12 items-center">
-          <a href="#" className="font-medium hover:text-primary">
-            Pricing
-          </a>
-          <a href="#" className="font-medium hover:text-primary">
-            About
-          </a>
-          <a href="#" className="font-medium hover:text-primary">
-            Blog
-          </a>
-          <Link href="/contact" className="font-medium hover:text-primary">
-            Contact
-          </Link>
 
-          {/* Conditional rendering for Desktop: Login vs Logout */}
-        
+        {/* Desktop Menu */}
+        <div className="hidden lg:flex gap-12 items-center">
+          <a href="#" className="font-medium hover:text-primary">Pricing</a>
+          <a href="#" className="font-medium hover:text-primary">About</a>
+          <a href="#" className="font-medium hover:text-primary">Blog</a>
+          <Link href="/contact" className="font-medium hover:text-primary">Contact</Link>
         </div>
+
+        {/* Desktop Auth Buttons */}
         <div className="hidden lg:flex flex-1 justify-end items-center gap-3">
           {isMounted && !session ? (
             <>
@@ -208,7 +197,6 @@ const Navbar = () => {
                 <button className="flex gap-2 items-center border border-gray-400 px-6 py-2 rounded-lg hover:border-gray-600 cursor-pointer">
                   <SiAuth0 />
                   <span className="font-display font-medium">Sign Up</span>
-                  <i className="fa-solid fa-arrow-right"></i>
                 </button>
               </Link>
             </>
@@ -227,24 +215,76 @@ const Navbar = () => {
           ) : null}
         </div>
 
-
+        {/* Mobile Menu Button */}
         <button className="p-2 lg:hidden" onClick={handleMenu}>
-          <i className="fa-solid fa-bars text-gray-600"></i>
+          {isMenuOpen ? (
+            <HiX className="text-gray-600 text-2xl" />
+          ) : (
+            <HiMenu className="text-gray-600 text-2xl" />
+          )}
         </button>
 
-        {/* ... The mobile menu follows the same logic ... */}
-        {isMounted && (
-          <div
-            id="nav-dialog"
-            className={`${isMenuOpen ? "" : "hidden"
-              } fixed z-10 md:hidden bg-white inset-0 p-3`}
-          >
-            {/* ... mobile nav content ... */}
-          </div>
-        )}
+        {/* Mobile Menu Drawer */}
+        <AnimatePresence>
+          {isMounted && isMenuOpen && (
+            <motion.div
+              key="mobile-nav"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2 }}
+              className="fixed z-40 md:hidden bg-white inset-0 p-3"
+            >
+              <div className="flex justify-between items-center mb-6">
+                <a href="#" className="flex gap-2 items-center">
+                  <Image
+                    className="object-cover"
+                    src="/assets/asset 0.png"
+                    alt="Logo"
+                    width={48}
+                    height={48}
+                  />
+                  <span className="text-lg font-medium font-display">ToDesktop</span>
+                </a>
+                <button className="p-2" onClick={handleMenu}>
+                  <HiX className="text-gray-600 text-2xl" />
+                </button>
+              </div>
+
+              {/* Mobile Links */}
+              <div className="space-y-3">
+  <a href="#" className="block px-4 py-2 rounded-lg hover:bg-gray-100">Pricing</a>
+  <a href="#" className="block px-4 py-2 rounded-lg hover:bg-gray-100">About</a>
+  <a href="#" className="block px-4 py-2 rounded-lg hover:bg-gray-100">Blog</a>
+  <Link href="/contact" className="block px-4 py-2 rounded-lg hover:bg-gray-100">Contact</Link>
+
+  {isMounted && !session ? (
+    <>
+      <Link href="/signin" className="block px-4 py-2 hover:bg-gray-100 rounded-lg">Login</Link>
+      <Link href="/signup">
+        <button className="w-full mt-3 flex justify-center items-center gap-2 border border-gray-400 px-4 py-3 rounded-lg hover:bg-gray-50">
+          <SiAuth0 />
+          Sign Up
+        </button>
+      </Link>
+    </>
+  ) : isMounted && session ? (
+    <button
+      onClick={handleLogout}
+      className="block w-full px-4 py-2 text-left text-red-600 hover:bg-red-50 rounded-lg"
+    >
+      Logout
+    </button>
+  ) : null}
+</div>
+
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
     </div>
   );
 };
 
 export default Navbar;
+
