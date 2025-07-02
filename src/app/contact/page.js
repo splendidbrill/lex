@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useSupabaseClient } from '@supabase/auth-helpers-react';
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -10,15 +11,42 @@ export default function ContactForm() {
     message: "",
   });
   const [showModal, setShowModal] = useState(false);
+  const supabase = useSupabaseClient();
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Optional: Send data to API here
+
+    // map camelCase keys to snake_case for Supabase
+    const dataToInsert = {
+      first_name: formData.firstName,
+      last_name: formData.lastName,
+      city: formData.city,
+      email: formData.email,
+      message: formData.message,
+    };
+
+    const { error } = await supabase
+      .from("contacts") // your Supabase table name
+      .insert([dataToInsert]);
+
+    if (error) {
+      console.error("Insert error:", error);
+      alert("Something went wrong. Check the console.");
+      return;
+    }
+
     setShowModal(true);
+    setFormData({
+  firstName: "",
+  lastName: "",
+  city: "",
+  email: "",
+  message: "",
+});
   };
 
   return (
