@@ -164,22 +164,25 @@ const Navbar = () => {
     <div>
       <nav className="p-3 flex bg-white justify-between items-center fixed top-0 left-0 right-0 z-20 shadow-md">
         {/* Brand */}
-        <a href="#" className="flex gap-2 items-center flex-1">
+        <Link href="/" className="flex gap-2 items-center flex-1">
           <Image
             className="object-cover"
-            src="/assets/asset 0.png"
+            src="/assets/lexnav.png"
             alt="Logo"
             width={48}
             height={48}
           />
-          <span className="text-lg font-medium font-display">ToDesktop</span>
-        </a>
+          
+
+          <span className="text-lg font-medium font-display">LexBot</span>
+          
+        </Link>
 
         {/* Desktop Menu */}
         <div className="hidden lg:flex gap-12 items-center">
           <a href="#" className="font-medium hover:text-primary">Pricing</a>
-          <a href="#" className="font-medium hover:text-primary">About</a>
-          <a href="#" className="font-medium hover:text-primary">Blog</a>
+          <Link href="/about" className="font-medium hover:text-primary">About</Link>
+          <Link href="/blog" className="font-medium hover:text-primary">Blog</Link>
           <Link href="/contact" className="font-medium hover:text-primary">Contact</Link>
         </div>
 
@@ -188,9 +191,9 @@ const Navbar = () => {
           {isMounted && !session ? (
             <>
               <Link href="/signin">
-                <button className="flex gap-2 items-center border border-gray-400 px-6 py-2 rounded-lg hover:border-gray-600 cursor-pointer">
+                <button className="flex gap-2 items-center text-white bg-amber-500 border border-amber-400 px-6 py-2 rounded-lg hover:border-gray-600 cursor-pointer">
                   <SiAuth0 />
-                  <span className="font-display font-medium">Login</span>
+                  <span className="font-display font-medium ">Login</span>
                 </button>
               </Link>
               <Link href="/signup">
@@ -203,7 +206,7 @@ const Navbar = () => {
           ) : isMounted && session ? (
             <>
               <span className="font-medium text-gray-700 mr-3">
-                Hi, {session.user.email?.split("@")[0]}
+                Hi, {session?.user?.email?.split("@")[0]}
               </span>
               <button
                 onClick={handleLogout}
@@ -236,16 +239,16 @@ const Navbar = () => {
               className="fixed z-40 md:hidden bg-white inset-0 p-3"
             >
               <div className="flex justify-between items-center mb-6">
-                <a href="#" className="flex gap-2 items-center">
+                <Link href="/" className="flex gap-2 items-center">
                   <Image
                     className="object-cover"
-                    src="/assets/asset 0.png"
+                    src="/assets/lexnav.png"
                     alt="Logo"
                     width={48}
                     height={48}
                   />
-                  <span className="text-lg font-medium font-display">ToDesktop</span>
-                </a>
+                  <span className="text-lg font-medium font-display">LexBot</span>
+                </Link>
                 <button className="p-2" onClick={handleMenu}>
                   <HiX className="text-gray-600 text-2xl" />
                 </button>
@@ -254,13 +257,13 @@ const Navbar = () => {
               {/* Mobile Links */}
               <div className="space-y-3">
   <a href="#" className="block px-4 py-2 rounded-lg hover:bg-gray-100">Pricing</a>
-  <a href="#" className="block px-4 py-2 rounded-lg hover:bg-gray-100">About</a>
-  <a href="#" className="block px-4 py-2 rounded-lg hover:bg-gray-100">Blog</a>
+  <Link href="/about" className="block px-4 py-2 rounded-lg hover:bg-gray-100">About</Link>
+  <Link href="/blog" className="block px-4 py-2 rounded-lg hover:bg-gray-100">Blog</Link>
   <Link href="/contact" className="block px-4 py-2 rounded-lg hover:bg-gray-100">Contact</Link>
 
   {isMounted && !session ? (
     <>
-      <Link href="/signin" className="block px-4 py-2 hover:bg-gray-100 rounded-lg">Login</Link>
+      <Link href="/signin" className="block px-4 py-2  hover:bg-gray-100  rounded-lg">Login</Link>
       <Link href="/signup">
         <button className="w-full mt-3 flex justify-center items-center gap-2 border border-gray-400 px-4 py-3 rounded-lg hover:bg-gray-50">
           <SiAuth0 />
