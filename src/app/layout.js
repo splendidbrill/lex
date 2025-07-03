@@ -3,6 +3,8 @@ import "./globals.css";
 import Providers from "./providers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
+import { Toaster } from "sonner";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +32,8 @@ export default async function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Providers session={session}>{children}</Providers>
+        <Providers session={session}>
+            <Toaster />{children}</Providers>
       </body>
     </html>
   );

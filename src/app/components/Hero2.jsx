@@ -6,6 +6,18 @@ import Steps from "./Steps";
 import Features from "./Features";
 import { FAQ } from "./FAQ";
 
+import {
+  Drawer,
+  DrawerTrigger,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerClose,
+} from "@/components/ui/drawer";
+import WaitlistDrawer from "./WaitlistDrawer";
+
 export const Hero2 = () => {
   return (
     <div>
@@ -66,9 +78,49 @@ export const Hero2 = () => {
               id="buttons-container"
               className="mt-12 flex gap-4 flex-col sm:flex-row"
             >
-              <button className="px-8 py-3 font-semibold rounded-lg text-white bg-blue-800 shadow-sm hover:bg-opacity-90">
+              {/* <button className="px-8 py-3 font-semibold rounded-lg text-white bg-blue-800 shadow-sm hover:bg-opacity-90">
                 Join Waitlist
-              </button>
+              </button> */}
+              <WaitlistDrawer/>
+              {/* <Drawer>
+                <DrawerTrigger asChild>
+                  <button className="px-8 py-3 font-semibold rounded-lg text-white bg-blue-800 shadow-sm hover:bg-opacity-90">
+                    Join Waitlist
+                  </button>
+                </DrawerTrigger>
+                <DrawerContent className="h-[50vh]">
+                  <div className="w-full h-full flex flex-col justify-center items-center px-4">
+                    <DrawerHeader className="text-center">
+                      <DrawerTitle>Join the Waitlist</DrawerTitle>
+                      <DrawerDescription>
+                        Submit your email to get early access.
+                      </DrawerDescription>
+                    </DrawerHeader>
+
+                    <form className="w-full flex flex-col gap-4 items-center mt-4">
+                      <input
+                        type="email"
+                        placeholder="Enter your email"
+                        className="w-full max-w-sm md:max-w-xs border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-800"
+                      />
+                      <div className="flex flex-col gap-2 w-full max-w-sm md:max-w-xs">
+                        <button
+                          type="submit"
+                          className="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-950 transition"
+                        >
+                          Submit
+                        </button>
+                        <DrawerClose asChild>
+                          <button className="border border-gray-400 px-4 py-2 rounded-lg">
+                            Cancel
+                          </button>
+                        </DrawerClose>
+                      </div>
+                    </form>
+                  </div>
+                </DrawerContent>
+              </Drawer> */}
+
               <button className="px-8 py-3 font-semibold rounded-lg bg-white border border-gray-400 hover:border-gray-800">
                 Read About Us
               </button>
