@@ -17,37 +17,88 @@ export default function ContactForm() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
 
-    // map camelCase keys to snake_case for Supabase
-    const dataToInsert = {
-      first_name: formData.firstName,
-      last_name: formData.lastName,
-      city: formData.city,
-      email: formData.email,
-      message: formData.message,
-    };
+//     // map camelCase keys to snake_case for Supabase
+//     const dataToInsert = {
+//       first_name: formData.firstName,
+//       last_name: formData.lastName,
+//       city: formData.city,
+//       email: formData.email,
+//       message: formData.message,
+//     };
 
-    const { error } = await supabase
-      .from("contacts") // your Supabase table name
-      .insert([dataToInsert]);
+//     const { error } = await supabase
+//       .from("contacts") // your Supabase table name
+//       .insert([dataToInsert]);
 
-    if (error) {
-      console.error("Insert error:", error);
-      alert("Something went wrong. Check the console.");
-      return;
-    }
+//     if (error) {
+//       console.error("Insert error:", error);
+//       alert("Something went wrong. Check the console.");
+//       return;
+//     }
 
-    setShowModal(true);
-    setFormData({
-  firstName: "",
-  lastName: "",
-  city: "",
-  email: "",
-  message: "",
-});
+//     setShowModal(true);
+//     setFormData({
+//   firstName: "",
+//   lastName: "",
+//   city: "",
+//   email: "",
+//   message: "",
+// });
+//   };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  // Format data for Supabase
+  const dataToInsert = {
+    first_name: formData.firstName,
+    last_name: formData.lastName,
+    city: formData.city,
+    email: formData.email,
+    message: formData.message,
   };
+
+  // Insert into Supabase
+  const { error } = await supabase
+    .from("contacts")
+    .insert([dataToInsert]);
+
+  if (error) {
+    console.error("Insert error:", error);
+    alert("Something went wrong. Check the console.");
+    return;
+  }
+
+  // Send email notification via API route
+  try {
+    const emailRes = await fetch("/api/send-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+
+    const result = await emailRes.json();
+
+    if (!result.success) {
+      console.error("Email send error:", result.error);
+      // optional: alert("Email failed to send.");
+    }
+  } catch (err) {
+    console.error("Email API call failed:", err);
+  }
+
+  // Show success modal & reset form
+  setShowModal(true);
+  setFormData({
+    firstName: "",
+    lastName: "",
+    city: "",
+    email: "",
+    message: "",
+  });
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
