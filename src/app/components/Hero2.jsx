@@ -19,24 +19,34 @@ import {
   DrawerClose,
 } from "@/components/ui/drawer";
 import WaitlistDrawer from "./WaitlistDrawer";
+import Footer from "./Footer";
 
 export const Hero2 = () => {
-  const [titleNumber, setTitleNumber] = useState(0);
-    const titles = useMemo(
-      () => ["amazing", "new", "wonderful", "beautiful", "smart"],
-      []
-    );
-  
-    useEffect(() => {
-      const timeoutId = setTimeout(() => {
-        if (titleNumber === titles.length - 1) {
-          setTitleNumber(0);
-        } else {
-          setTitleNumber(titleNumber + 1);
-        }
-      }, 2000);
-      return () => clearTimeout(timeoutId);
-    }, [titleNumber, titles]);
+ const [hasMounted, setHasMounted] = useState(false);
+const [titleNumber, setTitleNumber] = useState(0);
+
+const titles = useMemo(
+  () => ["Months", "Minutes", "a flash"],
+  []
+);
+
+useEffect(() => {
+  setHasMounted(true);
+}, []);
+
+useEffect(() => {
+  if (!hasMounted) return;
+
+  const delay = titleNumber === 0 ? 2500 : 1500;
+
+  const timer = setTimeout(() => {
+    setTitleNumber((prev) => (prev + 1) % titles.length);
+  }, delay);
+
+  return () => clearTimeout(timer);
+}, [titleNumber, hasMounted, titles]);
+
+
   return (
     <div>
       <Navbar />
@@ -75,11 +85,34 @@ export const Hero2 = () => {
                 <p>🏆 Succeed</p>
               </div>
             </div>
-            <h1 className="text-4xl font-semibold leading-snug mt-4 sm:text-6xl text-center">
-              Lex Bot
-              <br />
-              {/* Build Businesses in Mintues */}
+            <h1 className="text-5xl md:text-7xl max-w-2xl tracking-tighter text-center font-regular">
+              <span className="text-spektr-cyan-50">Build Businesses in</span>
+              {hasMounted && (
+                <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1 h-[64px] md:h-[80px]">
+
+                  {titles.map((title, index) => (
+                    <motion.span
+                      key={index}
+                      className={`absolute font-semibold ${
+                        title === "Months"
+                          ? "text-red-500 line-through"
+                          : "text-black-300"
+                      }`}
+                      initial={{ opacity: 0, y: "-100" }}
+                      animate={
+                        titleNumber === index
+                          ? { opacity: 1, y: 0 }
+                          : { opacity: 0, y: titleNumber > index ? -150 : 150 }
+                      }
+                      transition={{ type: "spring", stiffness: 50 }}
+                    >
+                      {title}
+                    </motion.span>
+                  ))}
+                </span>
+              )}
             </h1>
+
             {/* <div className="text-4xl font-bold text-center mt-4">
               Build Businesses in{" "}
               <span className="relative inline-block mr-2 text-red-500">
@@ -89,7 +122,7 @@ export const Hero2 = () => {
               Minutes
             </div> */}
             <div className="flex gap-4 flex-col">
-            <h1 className="text-5xl md:text-7xl max-w-2xl tracking-tighter text-center font-regular">
+              {/* <h1 className="text-5xl md:text-7xl max-w-2xl tracking-tighter text-center font-regular">
               <span className="text-spektr-cyan-50">Build Businesses in</span>
               <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1">
                 &nbsp;
@@ -115,15 +148,15 @@ export const Hero2 = () => {
                   </motion.span>
                 ))}
               </span>
-            </h1>
+            </h1> */}
 
-            {/* <p className="text-lg md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-2xl text-center">
+              {/* <p className="text-lg md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-2xl text-center">
               Managing a small business today is already tough. Avoid further
               complications by ditching outdated, tedious trade methods. Our
               goal is to streamline SMB trade, making it easier and faster than
               ever.
             </p> */}
-          </div>
+            </div>
 
             <p className="text-xl mt-4 sm:text-2xl sm:mt-8 text-gray-800">
               Your AI enhanced command center, cofounder and mentor.
@@ -135,7 +168,7 @@ export const Hero2 = () => {
               {/* <button className="px-8 py-3 font-semibold rounded-lg text-white bg-blue-800 shadow-sm hover:bg-opacity-90">
                 Join Waitlist
               </button> */}
-              <WaitlistDrawer/>
+              <WaitlistDrawer />
               {/* <Drawer>
                 <DrawerTrigger asChild>
                   <button className="px-8 py-3 font-semibold rounded-lg text-white bg-blue-800 shadow-sm hover:bg-opacity-90">
@@ -183,7 +216,8 @@ export const Hero2 = () => {
         </div>
         <Steps />
         <Features />
-        <FAQ />
+        {/* <FAQ /> */}
+        <Footer />
       </main>
     </div>
   );

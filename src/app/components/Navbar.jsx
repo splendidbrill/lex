@@ -142,6 +142,8 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
+
+
   const session = useSession();
   const supabase = useSupabaseClient();
   const router = useRouter();
@@ -149,6 +151,7 @@ const Navbar = () => {
   useEffect(() => {
     setIsMounted(true);
   }, []);
+ 
 
   const handleMenu = () => {
     setIsMenuOpen((prev) => !prev);
@@ -161,8 +164,9 @@ const Navbar = () => {
   };
 
   return (
-    <div>
-      <nav className="p-3 flex bg-white justify-between items-center fixed top-0 left-0 right-0 z-20 shadow-md">
+    <div className="fixed top-0 left-0 right-0 z-20 flex justify-center">
+      <nav className="w-[90%] p-3 flex justify-between items-center backdrop-blur-md bg-white/60 transition-all duration-300 rounded-full border-2 border-gray-200/50 shadow-lg mt-4">
+
         {/* Brand */}
         <Link href="/" className="flex gap-2 items-center flex-1">
           <Image
