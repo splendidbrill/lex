@@ -71,7 +71,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 pt-8 border-t border-gray-200 flex flex-col sm:flex-row sm:justify-between sm:items-center text-center sm:text-left">
-          <p className="text-base text-gray-500 font-inter">&copy; {new Date().getFullYear()} LexBot. All rights reserved.</p>
+          <p className="text-base text-gray-500 font-inter">&copy; {new Date().getFullYear()} KOLKAR TECHNOLOGIES INC. All rights reserved    and anywhere we say Lex Launch Crew add a ™️</p>
           <div className="flex justify-center sm:justify-start space-x-6 mt-6 sm:mt-0">
             <a href="#" className="text-gray-400 hover:text-gray-600 transition-colors duration-200">
               <FaFacebook className="h-6 w-6" />
