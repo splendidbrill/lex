@@ -50,7 +50,7 @@ useEffect(() => {
   return (
     <div>
       <Navbar />
-      <main className="mt-16">
+      <main className="mt-24">
         <div
           id="hero"
           className="min-h-screen bg-gradient-to-b from-purple-50 via-orange-50 to-transparent"
@@ -71,7 +71,7 @@ useEffect(() => {
               </p>
               <i className="fa-solid fa-arrow-right text-yellow-600 group-hover:translate-x-1 transition duration-300"></i>
             </div> */}
-            <div id="hero-features" className="hidden sm:flex gap-8 my-6">
+            <div  className="hidden sm:flex gap-8 my-6">
               <div className="flex justify-center gap-2 items-center text-gray-500">
                 <i className="fa-regular fa-file-code text-sm"></i>
                 <p>📘 Learn</p>
