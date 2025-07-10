@@ -192,7 +192,7 @@ const Navbar = () => {
 
         {/* Desktop Auth Buttons */}
         <div className="hidden lg:flex flex-1 justify-end items-center gap-3">
-          {/* {isMounted && !session ? (
+          {isMounted && !session ? (
             <>
               <Link href="/signin">
                 <button className="flex gap-2 items-center text-white bg-amber-500 border border-amber-400 px-6 py-2 rounded-lg hover:border-gray-600 cursor-pointer">
@@ -219,7 +219,7 @@ const Navbar = () => {
                 <span className="font-display font-medium">Logout</span>
               </button>
             </>
-          ) : null} */}
+          ) : null}
         </div>
 
         {/* Mobile Menu Button */}
@@ -288,7 +288,7 @@ const Navbar = () => {
                 Contact
               </Link>
 
-              {/* {isMounted && !session ? (
+              {isMounted && !session ? (
                 <>
                   <Link
                     href="/signin"
@@ -310,7 +310,7 @@ const Navbar = () => {
                 >
                   Logout
                 </button>
-              ) : null} */}
+              ) : null}
             </div>
           </motion.div>
         )}
