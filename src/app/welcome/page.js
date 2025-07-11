@@ -22,7 +22,7 @@ export default function WelcomePage() {
     } else {
       router.push("/signin");
     }
-  }, [session]);
+  }, [session, router]);
 
   if (checking) return <Spinner />;
 

@@ -1,6 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { MoveRight, PhoneCall } from "lucide-react";
 import Navbar from "./Navbar";
 import Steps from "./Steps";
 import Features from "./Features";
@@ -17,12 +20,39 @@ import {
   DrawerClose,
 } from "@/components/ui/drawer";
 import WaitlistDrawer from "./WaitlistDrawer";
+import Footer from "./Footer";
+import Pricing from "./Pricing";
 
 export const Hero2 = () => {
+ const [hasMounted, setHasMounted] = useState(false);
+const [titleNumber, setTitleNumber] = useState(0);
+
+const titles = useMemo(
+  () => ["Months", "Minutes", "a flash"],
+  []
+);
+
+useEffect(() => {
+  setHasMounted(true);
+}, []);
+
+useEffect(() => {
+  if (!hasMounted) return;
+
+  const delay = titleNumber === 0 ? 2500 : 1500;
+
+  const timer = setTimeout(() => {
+    setTitleNumber((prev) => (prev + 1) % titles.length);
+  }, delay);
+
+  return () => clearTimeout(timer);
+}, [titleNumber, hasMounted, titles]);
+
+
   return (
     <div>
       <Navbar />
-      <main className="mt-16">
+      <main className="mt-24">
         <div
           id="hero"
           className="min-h-screen bg-gradient-to-b from-purple-50 via-orange-50 to-transparent"
@@ -43,7 +73,7 @@ export const Hero2 = () => {
               </p>
               <i className="fa-solid fa-arrow-right text-yellow-600 group-hover:translate-x-1 transition duration-300"></i>
             </div> */}
-            <div id="hero-features" className="hidden sm:flex gap-8 my-6">
+            <div  className="hidden sm:flex gap-8 my-6">
               <div className="flex justify-center gap-2 items-center text-gray-500">
                 <i className="fa-regular fa-file-code text-sm"></i>
                 <p>📘 Learn</p>
@@ -57,21 +87,80 @@ export const Hero2 = () => {
                 <p>🏆 Succeed</p>
               </div>
             </div>
-            <h1 className="text-4xl font-semibold leading-snug mt-4 sm:text-6xl text-center">
-              Lex Bot
-              <br />
-              {/* Build Businesses in Mintues */}
+            <h1 className="text-5xl mb-5 md:text-7xl max-w-2xl tracking-tighter text-center font-regular">
+              <span className="text-spektr-cyan-50">Build Businesses in</span>
+              {hasMounted && (
+                <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1 h-[64px] md:h-[80px]">
+
+                  {titles.map((title, index) => (
+                    <motion.span
+                      key={index}
+                      className={`absolute font-semibold ${
+                        title === "Months"
+                          ? "text-red-500 line-through"
+                          : "text-black-300"
+                      }`}
+                      initial={{ opacity: 0, y: "-100" }}
+                      animate={
+                        titleNumber === index
+                          ? { opacity: 1, y: 0 }
+                          : { opacity: 0, y: titleNumber > index ? -150 : 150 }
+                      }
+                      transition={{ type: "spring", stiffness: 50 }}
+                    >
+                      {title}
+                    </motion.span>
+                  ))}
+                </span>
+              )}
             </h1>
-            <div className="text-4xl font-bold text-center mt-4">
+
+            {/* <div className="text-4xl font-bold text-center mt-4">
               Build Businesses in{" "}
               <span className="relative inline-block mr-2 text-red-500">
                 <span className="relative z-10">Months</span>
                 <span className="absolute left-0 top-1/2 w-full h-[3px] bg-red-500 transform -translate-y-1/2 z-0"></span>
               </span>
               Minutes
+            </div> */}
+            <div className="flex gap-4 flex-col">
+              {/* <h1 className="text-5xl md:text-7xl max-w-2xl tracking-tighter text-center font-regular">
+              <span className="text-spektr-cyan-50">Build Businesses in</span>
+              <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1">
+                &nbsp;
+                {titles.map((title, index) => (
+                  <motion.span
+                    key={index}
+                    className="absolute font-semibold"
+                    initial={{ opacity: 0, y: "-100" }}
+                    transition={{ type: "spring", stiffness: 50 }}
+                    animate={
+                      titleNumber === index
+                        ? {
+                            y: 0,
+                            opacity: 1,
+                          }
+                        : {
+                            y: titleNumber > index ? -150 : 150,
+                            opacity: 0,
+                          }
+                    }
+                  >
+                    {title}
+                  </motion.span>
+                ))}
+              </span>
+            </h1> */}
+
+              {/* <p className="text-lg md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-2xl text-center">
+              Managing a small business today is already tough. Avoid further
+              complications by ditching outdated, tedious trade methods. Our
+              goal is to streamline SMB trade, making it easier and faster than
+              ever.
+            </p> */}
             </div>
 
-            <p className="text-xl mt-4 sm:text-2xl sm:mt-8 text-gray-800">
+            <p className="text-xl mt-8 sm:text-2xl sm:mt-8 text-gray-800">
               Your AI enhanced command center, cofounder and mentor.
             </p>
             <div
@@ -81,7 +170,7 @@ export const Hero2 = () => {
               {/* <button className="px-8 py-3 font-semibold rounded-lg text-white bg-blue-800 shadow-sm hover:bg-opacity-90">
                 Join Waitlist
               </button> */}
-              <WaitlistDrawer/>
+              <WaitlistDrawer />
               {/* <Drawer>
                 <DrawerTrigger asChild>
                   <button className="px-8 py-3 font-semibold rounded-lg text-white bg-blue-800 shadow-sm hover:bg-opacity-90">
@@ -120,16 +209,22 @@ export const Hero2 = () => {
                   </div>
                 </DrawerContent>
               </Drawer> */}
-
+              <Link href="/about">
               <button className="px-8 py-3 font-semibold rounded-lg bg-white border border-gray-400 hover:border-gray-800">
                 Read About Us
               </button>
+              </Link>
+              
             </div>
           </div>
         </div>
         <Steps />
         <Features />
-        <FAQ />
+        <div id="pricing">
+          <Pricing />
+        </div>
+        {/* <FAQ /> */}
+        <Footer />
       </main>
     </div>
   );

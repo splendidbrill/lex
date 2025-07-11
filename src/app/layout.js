@@ -29,6 +29,13 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en">
+      <head>
+        <style>{`
+          html {
+            scroll-behavior: smooth;
+          }
+        `}</style>
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

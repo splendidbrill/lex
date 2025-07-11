@@ -96,6 +96,7 @@ const WaitlistDrawer = ({ triggerLabel = "Join Waitlist" }) => {
                       Cancel
                     </button>
                   </DrawerClose>
+                  <p className="text-center"><a href="https://app.termly.io/policy-viewer/policy.html?policyUUID=18acfba8-713a-4e53-aa03-d681624602b4">Privacy Policy</a></p>
                 </div>
               </form>
             </>
