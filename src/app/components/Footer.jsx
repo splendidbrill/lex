@@ -60,7 +60,7 @@ const Footer = () => {
               <p className="text-sm font-semibold text-gray-800 uppercase tracking-wider mb-4">Legal</p>
               <ul className="space-y-3">
                 <li>
-                  <Link href="#" className="text-base text-gray-600 hover:text-gray-900 font-inter transition-colors duration-200">Privacy Policy</Link>
+                  <Link href="/privacy-policy" className="text-base text-gray-600 hover:text-gray-900 font-inter transition-colors duration-200">Privacy Policy</Link>
                 </li>
                 <li>
                   <Link href="#" className="text-base text-gray-600 hover:text-gray-900 font-inter transition-colors duration-200">Terms of Service</Link>
