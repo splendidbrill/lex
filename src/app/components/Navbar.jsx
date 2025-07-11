@@ -176,7 +176,7 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden lg:flex gap-12 items-center">
-          <a href="#" className="font-medium hover:text-primary">
+          <a href="#pricing" className="font-medium hover:text-primary">
             Pricing
           </a>
           <Link href="/about" className="font-medium hover:text-primary">
@@ -264,7 +264,7 @@ const Navbar = () => {
             {/* Mobile Links */}
             <div className="space-y-3 text-center">
               <a
-                href="#"
+                href="#pricing"
                 className="block px-4 py-2 rounded-lg hover:bg-gray-100"
               >
                 Pricing

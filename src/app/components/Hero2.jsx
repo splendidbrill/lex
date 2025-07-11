@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/drawer";
 import WaitlistDrawer from "./WaitlistDrawer";
 import Footer from "./Footer";
+import Pricing from "./Pricing";
 
 export const Hero2 = () => {
  const [hasMounted, setHasMounted] = useState(false);
@@ -85,7 +86,7 @@ useEffect(() => {
                 <p>🏆 Succeed</p>
               </div>
             </div>
-            <h1 className="text-5xl md:text-7xl max-w-2xl tracking-tighter text-center font-regular">
+            <h1 className="text-5xl mb-5 md:text-7xl max-w-2xl tracking-tighter text-center font-regular">
               <span className="text-spektr-cyan-50">Build Businesses in</span>
               {hasMounted && (
                 <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1 h-[64px] md:h-[80px]">
@@ -158,7 +159,7 @@ useEffect(() => {
             </p> */}
             </div>
 
-            <p className="text-xl mt-4 sm:text-2xl sm:mt-8 text-gray-800">
+            <p className="text-xl mt-8 sm:text-2xl sm:mt-8 text-gray-800">
               Your AI enhanced command center, cofounder and mentor.
             </p>
             <div
@@ -216,6 +217,9 @@ useEffect(() => {
         </div>
         <Steps />
         <Features />
+        <div id="pricing">
+          <Pricing />
+        </div>
         {/* <FAQ /> */}
         <Footer />
       </main>
