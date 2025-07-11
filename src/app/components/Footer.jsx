@@ -60,7 +60,7 @@ const Footer = () => {
               <p className="text-sm font-semibold text-gray-800 uppercase tracking-wider mb-4">Legal</p>
               <ul className="space-y-3">
                 <li>
-                  <Link href="/privacy-policy" className="text-base text-gray-600 hover:text-gray-900 font-inter transition-colors duration-200">Privacy Policy</Link>
+                  <Link href="https://app.termly.io/policy-viewer/policy.html?policyUUID=18acfba8-713a-4e53-aa03-d681624602b4" className="text-base text-gray-600 hover:text-gray-900 font-inter transition-colors duration-200">Privacy Policy</Link>
                 </li>
                 <li>
                   <Link href="#" className="text-base text-gray-600 hover:text-gray-900 font-inter transition-colors duration-200">Terms of Service</Link>

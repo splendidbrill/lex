@@ -163,7 +163,9 @@ const handleSubmit = async (e) => {
           >
             {isSending ? "Sending..." : "Send"}
           </button>
+
         </form>
+        <p className="text-center mt-4"><a href="https://app.termly.io/policy-viewer/policy.html?policyUUID=18acfba8-713a-4e53-aa03-d681624602b4">Privacy Policy</a></p>
 
         <AlertDialog open={showModal} onOpenChange={setShowModal}>
           <AlertDialogContent>

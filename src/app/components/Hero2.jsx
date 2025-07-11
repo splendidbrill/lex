@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { MoveRight, PhoneCall } from "lucide-react";
 import Navbar from "./Navbar";
 import Steps from "./Steps";
@@ -208,10 +209,12 @@ useEffect(() => {
                   </div>
                 </DrawerContent>
               </Drawer> */}
-
+              <Link href="/about">
               <button className="px-8 py-3 font-semibold rounded-lg bg-white border border-gray-400 hover:border-gray-800">
                 Read About Us
               </button>
+              </Link>
+              
             </div>
           </div>
         </div>
