@@ -191,7 +191,7 @@ export default function NewWorkspacePage() {
                     ))}
                 </ul>
                 <div className="mt-auto pt-4 border-t border-gray-700">
-                    {session?.user?.email && (
+                    {session?.user?.email ? (
                         <div className="flex items-center space-x-2 text-sm">
                             <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-600 text-white font-bold">
                                 {session.user.email[0].toUpperCase()}
@@ -218,6 +218,15 @@ export default function NewWorkspacePage() {
                                 </div>
                             )}
                         </div>
+                    ) : (
+                        !isSidebarCollapsed && (
+                            <button
+                                onClick={() => router.push('/signin')}
+                                className="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white text-sm"
+                            >
+                                Login
+                            </button>
+                        )
                     )}
                 </div>
             </div>
