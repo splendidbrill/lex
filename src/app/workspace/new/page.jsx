@@ -37,6 +37,7 @@ export default function NewWorkspacePage() {
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentLayoutName, setCurrentLayoutName] = useState("Default");
   const gridRef = useRef();
 
    useEffect(() => {
@@ -173,6 +174,7 @@ export default function NewWorkspacePage() {
     } else if (data) {
         setPanels(data.panels);
         setShowDropdown(false);
+        setCurrentLayoutName(name); // Update current layout name
         showToast(`Loaded layout "${name}"`);
     } else {
         showToast(`Layout "${name}" not found.`);
@@ -273,6 +275,7 @@ export default function NewWorkspacePage() {
                 </button>
             </div>
             <div className="flex space-x-2 relative">
+                <span className="text-sm font-medium mr-2 "> {currentLayoutName}</span>
                 <button onClick={openSaveModal} className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded">
                     <SaveIcon size={16} />
                     <span>Save layout</span>
