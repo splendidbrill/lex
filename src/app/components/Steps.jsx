@@ -38,10 +38,10 @@ const Steps = () => {
                     </ul>
                 </div>
                 <div className="pt-12">
-                    <Image src="./assets/asset 66.svg" alt="" width={500} height={300}/>
+                    <Image src="/assets/lex-step2.png" alt="" width={500} height={300}/>
                 </div>
             </div>
-            <div id="step2" className="rounded-xl border border-gray-200/70 px-8 py-12 flex flex-col lg:flex-row justify-between">
+            <div id="step2" className="rounded-xl border border-gray-200/70 px-8 py-12 flex flex-col lg:flex-row justify-around items-center">
                 <div className="flex flex-col gap-6 lg:w-1/2">
                     <span className="border border-yellow-300 bg-yellow-50 text-yellow-800 w-fit px-3 py-1 rounded-lg font-medium font-display">Step 2</span>
                     <h3 className="text-4xl">AI enhanced command centre</h3>
@@ -74,10 +74,10 @@ const Steps = () => {
                     </ul>
                 </div>
                 <div className="pt-12">
-                    <Image src="./assets/asset 66.svg" alt="" width={500} height={300} />
+                    <Image src="/assets/lex-step3.png" alt="" width={250} height={170} />
                 </div>
             </div>
-            <div id="step3" className="rounded-xl border border-gray-200/70 px-8 py-12 flex flex-col lg:flex-row justify-between">
+            <div id="step3" className="rounded-xl border border-gray-200/70 px-8 py-12 flex flex-col lg:flex-row justify-around items-center">
                 <div className="flex flex-col gap-6 lg:w-1/2">
                     <span className="border border-yellow-300 bg-yellow-50 text-yellow-800 w-fit px-3 py-1 rounded-lg font-medium font-display">Step 3</span>
                     <h3 className="text-4xl">Lex as your cofounder</h3>
@@ -110,7 +110,7 @@ const Steps = () => {
                     </ul>
                 </div>
                 <div className="pt-12">
-                    <Image src="./assets/asset 66.svg" alt="" width={500} height={300} />
+                    <Image src="/assets/lex-step1.png" alt="" width={400} height={300} />
                 </div>
             </div>
         </div>

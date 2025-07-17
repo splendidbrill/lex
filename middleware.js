@@ -18,5 +18,5 @@ export async function middleware() {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*"], // protect routes under /dashboard
+  matcher: ["/dashboard/:path*", "/workspace/:path*"], // protect routes under /dashboard and /workspace
 };

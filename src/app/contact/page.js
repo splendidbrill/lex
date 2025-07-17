@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import { useSupabaseClient } from '@supabase/auth-helpers-react';
+import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -10,16 +12,97 @@ export default function ContactForm() {
     message: "",
   });
   const [showModal, setShowModal] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const supabase = useSupabaseClient();
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Optional: Send data to API here
-    setShowModal(true);
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     // map camelCase keys to snake_case for Supabase
+//     const dataToInsert = {
+//       first_name: formData.firstName,
+//       last_name: formData.lastName,
+//       city: formData.city,
+//       email: formData.email,
+//       message: formData.message,
+//     };
+
+//     const { error } = await supabase
+//       .from("contacts") // your Supabase table name
+//       .insert([dataToInsert]);
+
+//     if (error) {
+//       console.error("Insert error:", error);
+//       alert("Something went wrong. Check the console.");
+//       return;
+//     }
+
+//     setShowModal(true);
+//     setFormData({
+//   firstName: "",
+//   lastName: "",
+//   city: "",
+//   email: "",
+//   message: "",
+// });
+//   };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsSending(true);
+
+  // Format data for Supabase
+  const dataToInsert = {
+    first_name: formData.firstName,
+    last_name: formData.lastName,
+    city: formData.city,
+    email: formData.email,
+    message: formData.message,
   };
+
+  // Insert into Supabase
+  const { error } = await supabase
+    .from("contacts")
+    .insert([dataToInsert]);
+
+  if (error) {
+    console.error("Insert error:", error);
+    alert("Something went wrong. Check the console.");
+    return;
+  }
+
+  // Send email notification via API route
+  try {
+    const emailRes = await fetch("/api/send-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+
+    const result = await emailRes.json();
+
+    if (!result.success) {
+      console.error("Email send error:", result.error);
+      // optional: alert("Email failed to send.");
+    }
+  } catch (err) {
+    console.error("Email API call failed:", err);
+  }
+
+  // Show success modal & reset form
+  setShowModal(true);
+  setFormData({
+    firstName: "",
+    lastName: "",
+    city: "",
+    email: "",
+    message: "",
+  });
+  setIsSending(false);
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
@@ -76,26 +159,29 @@ export default function ContactForm() {
           <button
             type="submit"
             className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors"
+            disabled={isSending}
           >
-            Send
+            {isSending ? "Sending..." : "Send"}
           </button>
-        </form>
 
-        {showModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-            <div className="bg-white text-black rounded-lg p-6 w-80 relative shadow-lg">
-              <h3 className="text-lg font-semibold mb-4">Message Sent</h3>
-              <p className="mb-4">Your message was sent successfully. Thank you.</p>
-              <button
-                onClick={() => setShowModal(false)}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
-              >
-                OK
-              </button>
-            </div>
-          </div>
-        )}
+        </form>
+        <p className="text-center mt-4"><a href="https://app.termly.io/policy-viewer/policy.html?policyUUID=18acfba8-713a-4e53-aa03-d681624602b4">Privacy Policy</a></p>
+
+        <AlertDialog open={showModal} onOpenChange={setShowModal}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Message Sent</AlertDialogTitle>
+              <AlertDialogDescription>
+                Your message was sent successfully. Thank you.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogAction onClick={() => setShowModal(false)}>OK</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );
 }
+
