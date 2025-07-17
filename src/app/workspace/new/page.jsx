@@ -34,6 +34,7 @@ export default function NewWorkspacePage() {
   const [layoutName, setLayoutName] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
   const gridRef = useRef();
 
    useEffect(() => {
@@ -47,6 +48,11 @@ export default function NewWorkspacePage() {
     localStorage.setItem("lex-all-layouts", JSON.stringify(obj));
   };
   const handleQuit = async () => {
+    await supabase.auth.signOut();
+    router.push("/");
+  };
+
+  const handleLogout = async () => {
     await supabase.auth.signOut();
     router.push("/");
   };
@@ -190,7 +196,27 @@ export default function NewWorkspacePage() {
                             <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-600 text-white font-bold">
                                 {session.user.email[0].toUpperCase()}
                             </div>
-                            {!isSidebarCollapsed && <span>{session.user.email}</span>}
+                            {!isSidebarCollapsed && (
+                                <div className="relative">
+                                    <span>{session.user.email}</span>
+                                    <button
+                                        onClick={() => setShowUserDropdown(!showUserDropdown)}
+                                        className="ml-2 p-1 rounded-full hover:bg-gray-700 focus:outline-none"
+                                    >
+                                        ...
+                                    </button>
+                                    {showUserDropdown && (
+                                        <div className="absolute bottom-full left-0 mb-2 w-32 bg-white text-black rounded shadow-lg z-50">
+                                            <button
+                                                onClick={handleLogout}
+                                                className="block w-full text-left px-4 py-2 hover:bg-gray-200"
+                                            >
+                                                Logout
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>
