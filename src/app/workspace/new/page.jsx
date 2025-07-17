@@ -3,6 +3,7 @@ import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import { HomeIcon, LayoutIcon, SaveIcon, MenuIcon, XIcon } from "lucide-react";
+import Spinner from "../../components/Spinner";
 
 
 const initialPanels = [
@@ -35,6 +36,7 @@ export default function NewWorkspacePage() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const gridRef = useRef();
 
    useEffect(() => {
@@ -157,6 +159,7 @@ export default function NewWorkspacePage() {
         showToast("Please log in to load layouts.");
         return;
     }
+    setIsLoading(true); // Start loading
     const { data, error } = await supabase
         .from('layouts')
         .select('panels')
@@ -174,6 +177,7 @@ export default function NewWorkspacePage() {
     } else {
         showToast(`Layout "${name}" not found.`);
     }
+    setIsLoading(false); // End loading
   };
 
   const handleDeleteLayout = async (e, name) => {
@@ -381,6 +385,11 @@ export default function NewWorkspacePage() {
                         <div onMouseDown={(e) => handleResizeStart(e, panel.id)} className="w-3 h-3 bg-gray-400 absolute bottom-0 right-0 cursor-se-resize" />
                     </div>
                 ))}
+                {isLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+                        <Spinner />
+                    </div>
+                )}
             </div>
         </div>
 
@@ -397,6 +406,11 @@ export default function NewWorkspacePage() {
         )}
 
         {toast && <div className="fixed bottom-4 right-4 bg-black text-white px-4 py-2 rounded shadow-lg text-sm z-50">{toast}</div>}
+        {isLoading && (
+            <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+                <Spinner />
+            </div>
+        )}
     </div>
   );
 }
