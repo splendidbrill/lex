@@ -273,34 +273,36 @@ export default function NewWorkspacePage() {
                     <SaveIcon size={16} />
                     <span>Save layout</span>
                 </button>
-                <button onClick={() => setShowDropdown(!showDropdown)} className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded">
-                    <LayoutIcon size={16} />
-                    <span>All Saved Layouts</span>
-                </button>
+                <div className="relative">
+                    <button onClick={() => setShowDropdown(!showDropdown)} className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded">
+                        <LayoutIcon size={16} />
+                        <span>All Saved Layouts</span>
+                    </button>
+                    {showDropdown && (
+                        <div className="origin-top-right absolute top-full right-0 mt-2 bg-white text-black rounded shadow-lg z-50">
+                            {Object.keys(allLayouts).length === 0 ? (
+                                <div className="p-2">No layouts saved</div>
+                            ) : (
+                                Object.entries(allLayouts).map(([name]) => (
+                                    <div key={name} className="flex justify-between items-center px-4 py-2 hover:bg-gray-200 cursor-pointer">
+                                        <span onClick={() => loadNamed(name)} className="flex-grow">{name}</span>
+                                        <button
+                                            onClick={(e) => handleDeleteLayout(e, name)}
+                                            className="ml-4 text-red-500 hover:text-red-700"
+                                        >
+                                            ×
+                                        </button>
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                    )}
+                </div>
                 <button onClick={handleQuit} className="flex items-center space-x-2 bg-red-600 hover:bg-red-700 px-3 py-1 rounded">
                     <HomeIcon size={16} />
                     <span>Quit to home</span>
                 </button>
             </div>
-            {showDropdown && (
-                <div className="origin-top-right absolute right-4 mt-10 bg-white text-black rounded shadow-lg z-50">
-                    {Object.keys(allLayouts).length === 0 ? (
-                        <div className="p-2">No layouts saved</div>
-                    ) : (
-                        Object.entries(allLayouts).map(([name]) => (
-                            <div key={name} className="flex justify-between items-center px-4 py-2 hover:bg-gray-200 cursor-pointer">
-                                <span onClick={() => loadNamed(name)} className="flex-grow">{name}</span>
-                                <button
-                                    onClick={(e) => handleDeleteLayout(e, name)}
-                                    className="ml-4 text-red-500 hover:text-red-700"
-                                >
-                                    ×
-                                </button>
-                            </div>
-                        ))
-                    )}
-                </div>
-            )}
         </div>
 
         <div className="flex flex-grow overflow-hidden">
