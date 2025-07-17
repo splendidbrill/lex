@@ -38,15 +38,34 @@ export default function NewWorkspacePage() {
   const gridRef = useRef();
 
    useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("lex-all-layouts") || "{}");
-    setAllLayouts(saved);
-  }, []);
+    const fetchLayouts = async () => {
+        if (session) {
+            const { data, error } = await supabase
+                .from('layouts')
+                .select('*')
+                .eq('user_id', session.user.id);
+
+            if (error) {
+                console.error('Error fetching layouts:', error);
+                showToast('Error fetching layouts.');
+            } else {
+                const fetched = data.reduce((acc, layout) => {
+                    acc[layout.layout_name] = layout.panels;
+                    return acc;
+                }, {});
+                setAllLayouts(fetched);
+            }
+        } else {
+            setAllLayouts({}); // Clear layouts if no session
+        }
+    };
+
+    fetchLayouts();
+  }, [session, supabase]);
 
   
 
-  const saveAllLayouts = (obj) => {
-    localStorage.setItem("lex-all-layouts", JSON.stringify(obj));
-  };
+  
   const handleQuit = async () => {
     await supabase.auth.signOut();
     router.push("/");
@@ -67,19 +86,118 @@ export default function NewWorkspacePage() {
     setShowModal(true);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!layoutName.trim()) return;
-    const newLayouts = { ...allLayouts, [layoutName.trim()]: panels };
-    setAllLayouts(newLayouts);
-    saveAllLayouts(newLayouts);
+    if (!session) {
+        showToast("Please log in to save layouts.");
+        return;
+    }
+
+    console.log("Session:", session);
+
+    const newLayout = {
+        user_id: session.user.id,
+        layout_name: layoutName.trim(),
+        panels: panels,
+    };
+
+    console.log("New layout data:", newLayout);
+
+    // Check if layout already exists
+    const { data: existingLayout, error: fetchError } = await supabase
+        .from('layouts')
+        .select('id')
+        .eq('user_id', session.user.id)
+        .eq('layout_name', layoutName.trim())
+        .single();
+
+    if (fetchError && fetchError.code !== 'PGRST116') { // PGRST116 means no rows found
+        console.error('Error checking existing layout:', fetchError);
+        showToast('Error saving layout.');
+        return;
+    }
+
+    console.log("Existing layout check result:", { existingLayout, fetchError });
+
+    if (existingLayout) {
+        // Update existing layout
+        const { error } = await supabase
+            .from('layouts')
+            .update(newLayout)
+            .eq('id', existingLayout.id);
+
+        if (error) {
+            console.error('Error updating layout:', error);
+            showToast('Error updating layout.');
+        } else {
+            const newLayouts = { ...allLayouts, [layoutName.trim()]: panels };
+            setAllLayouts(newLayouts);
+            showToast("Layout updated!");
+        }
+    } else {
+        // Insert new layout
+        const { error } = await supabase
+            .from('layouts')
+            .insert([newLayout]);
+
+        if (error) {
+            console.error('Error inserting layout:', error);
+            showToast('Error saving layout.');
+        } else {
+            const newLayouts = { ...allLayouts, [layoutName.trim()]: panels };
+            setAllLayouts(newLayouts);
+            showToast("Layout saved!");
+        }
+    }
     setShowModal(false);
-    showToast("Layout saved!");
   };
 
-  const loadNamed = (name) => {
-    setPanels(allLayouts[name]);
-    setShowDropdown(false);
-    showToast(`Loaded layout "${name}"`);
+  const loadNamed = async (name) => {
+    if (!session) {
+        showToast("Please log in to load layouts.");
+        return;
+    }
+    const { data, error } = await supabase
+        .from('layouts')
+        .select('panels')
+        .eq('user_id', session.user.id)
+        .eq('layout_name', name)
+        .single();
+
+    if (error) {
+        console.error('Error loading layout:', error);
+        showToast('Error loading layout.');
+    } else if (data) {
+        setPanels(data.panels);
+        setShowDropdown(false);
+        showToast(`Loaded layout "${name}"`);
+    } else {
+        showToast(`Layout "${name}" not found.`);
+    }
+  };
+
+  const handleDeleteLayout = async (e, name) => {
+    e.stopPropagation(); // Prevent triggering loadNamed
+    if (!session) {
+        showToast("Please log in to delete layouts.");
+        return;
+    }
+
+    const { error } = await supabase
+        .from('layouts')
+        .delete()
+        .eq('user_id', session.user.id)
+        .eq('layout_name', name);
+
+    if (error) {
+        console.error('Error deleting layout:', error);
+        showToast('Error deleting layout.');
+    } else {
+        const newLayouts = { ...allLayouts };
+        delete newLayouts[name];
+        setAllLayouts(newLayouts);
+        showToast(`Layout "${name}" deleted.`);
+    }
   };
 
   const onDragStart = (e, id) => {
@@ -170,7 +288,15 @@ export default function NewWorkspacePage() {
                         <div className="p-2">No layouts saved</div>
                     ) : (
                         Object.entries(allLayouts).map(([name]) => (
-                            <div key={name} onClick={() => loadNamed(name)} className="px-4 py-2 hover:bg-gray-200 cursor-pointer">{name}</div>
+                            <div key={name} className="flex justify-between items-center px-4 py-2 hover:bg-gray-200 cursor-pointer">
+                                <span onClick={() => loadNamed(name)} className="flex-grow">{name}</span>
+                                <button
+                                    onClick={(e) => handleDeleteLayout(e, name)}
+                                    className="ml-4 text-red-500 hover:text-red-700"
+                                >
+                                    ×
+                                </button>
+                            </div>
                         ))
                     )}
                 </div>
