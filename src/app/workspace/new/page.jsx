@@ -38,6 +38,8 @@ export default function NewWorkspacePage() {
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentLayoutName, setCurrentLayoutName] = useState("Default");
+  const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
+  const [layoutToDelete, setLayoutToDelete] = useState(null);
   const gridRef = useRef();
 
    useEffect(() => {
@@ -182,40 +184,47 @@ export default function NewWorkspacePage() {
     setIsLoading(false); // End loading
   };
 
-  const handleDeleteLayout = async (e, name) => {
+  const handleDeleteLayout = (e, name) => {
     e.stopPropagation(); // Prevent triggering loadNamed
     if (!session) {
         showToast("Please log in to delete layouts.");
         return;
     }
+    setLayoutToDelete(name);
+    setShowDeleteConfirmModal(true);
+  };
 
-    console.log("Attempting to delete layout:", name);
+  const confirmDeleteLayout = async () => {
+    if (!session || !layoutToDelete) return;
+
+    console.log("Attempting to delete layout:", layoutToDelete);
     console.log("Session user ID:", session.user.id);
 
     const { error } = await supabase
         .from('layouts')
         .delete()
         .eq('user_id', session.user.id)
-        .eq('layout_name', name);
+        .eq('layout_name', layoutToDelete);
 
     if (error) {
         console.error('Error deleting layout:', error);
         showToast('Error deleting layout.');
     } else {
         const newLayouts = { ...allLayouts };
-        delete newLayouts[name];
+        delete newLayouts[layoutToDelete];
         setAllLayouts(newLayouts);
-        showToast(`Layout "${name}" deleted.`);
+        showToast(`Layout "${layoutToDelete}" deleted.`);
 
         // If the deleted layout was the currently active one, revert to default
-        if (currentLayoutName === name) {
+        if (currentLayoutName === layoutToDelete) {
             setPanels(initialPanels);
             setCurrentLayoutName("Default");
         }
     }
+    setShowDeleteConfirmModal(false);
+    setLayoutToDelete(null);
   };
-
-  const onDragStart = (e, id) => {
+    const onDragStart = (e, id) => {
     e.dataTransfer.setData("text/plain", id);
     setZIndexCounter((z) => z + 1);
     setPanels((prev) =>
@@ -421,6 +430,18 @@ export default function NewWorkspacePage() {
         {isLoading && (
             <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
                 <Spinner />
+            </div>
+        )}
+        {showDeleteConfirmModal && (
+            <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+                <div className="bg-white text-black rounded-lg p-6 w-80 relative">
+                    <h2 className="text-lg font-semibold mb-4">Confirm Deletion</h2>
+                    <p>Do you really want to delete the layout "{layoutToDelete}"?</p>
+                    <div className="mt-4 flex justify-end space-x-2">
+                        <button onClick={() => setShowDeleteConfirmModal(false)} className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300">Cancel</button>
+                        <button onClick={confirmDeleteLayout} className="px-4 py-2 rounded bg-red-600 hover:bg-red-700 text-white">Delete</button>
+                    </div>
+                </div>
             </div>
         )}
     </div>
