@@ -173,7 +173,7 @@ export default function NewWorkspacePage() {
 
         <div className="flex flex-grow overflow-hidden">
             <div 
-                className={`bg-gray-800 p-3 border-r border-gray-700 overflow-y-auto transition-all duration-300 ${isSidebarCollapsed ? 'w-16' : 'w-64'}`}
+                className={`bg-gray-800 p-3 border-r border-gray-700 overflow-y-auto transition-all duration-300 flex flex-col ${isSidebarCollapsed ? 'w-16' : 'w-64'}`}
             >
                 <h2 className={`text-lg font-semibold mb-2 ${isSidebarCollapsed ? 'hidden' : ''}`}>AI Agents</h2>
                 <ul className="space-y-2 text-sm">
@@ -184,6 +184,16 @@ export default function NewWorkspacePage() {
                         </li>
                     ))}
                 </ul>
+                <div className="mt-auto pt-4 border-t border-gray-700">
+                    {session?.user?.email && (
+                        <div className="flex items-center space-x-2 text-sm">
+                            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-600 text-white font-bold">
+                                {session.user.email[0].toUpperCase()}
+                            </div>
+                            {!isSidebarCollapsed && <span>{session.user.email}</span>}
+                        </div>
+                    )}
+                </div>
             </div>
 
             <div 
