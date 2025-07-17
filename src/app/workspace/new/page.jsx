@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import { HomeIcon, LayoutIcon, SaveIcon, MenuIcon, XIcon } from "lucide-react";
 import Spinner from "../../components/Spinner";
+import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 
 
 const initialPanels = [
@@ -415,15 +416,20 @@ export default function NewWorkspacePage() {
         </div>
 
         {showModal && (
-            <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-                <div className="bg-white text-black rounded-lg p-6 w-80 relative">
-                    <button onClick={() => setShowModal(false)} className="absolute top-2 right-2 text-gray-600 hover:text-gray-800">×</button>
-                    <h2 className="text-lg font-semibold mb-4">Save Layout</h2>
-                    <input value={layoutName} onChange={(e) => setLayoutName(e.target.value)} placeholder="Layout name" className="w-full border px-3 py-2 mb-4 rounded" />
-                    <button onClick={handleSave} className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white">Save</button>
-                    <button onClick={() => setShowModal(false)} className="ml-2 text-gray-600">Cancel</button>
-                </div>
-            </div>
+            <AlertDialog open={showModal} onOpenChange={setShowModal}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Save Layout</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            <input value={layoutName} onChange={(e) => setLayoutName(e.target.value)} placeholder="Layout name" className="w-full border px-3 py-2 mb-4 rounded text-black" />
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogAction onClick={handleSave} className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white">Save</AlertDialogAction>
+                        <AlertDialogAction onClick={() => setShowModal(false)} className="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded text-black">Cancel</AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         )}
 
         {toast && <div className="fixed bottom-4 right-4 bg-black text-white px-4 py-2 rounded shadow-lg text-sm z-50">{toast}</div>}
