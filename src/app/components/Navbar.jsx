@@ -182,9 +182,9 @@ const Navbar = () => {
           <Link href="/about" className="font-medium hover:text-primary">
             About
           </Link>
-          <Link href="/blog" className="font-medium hover:text-primary">
+          {/* <Link href="/blog" className="font-medium hover:text-primary">
             Blog
-          </Link>
+          </Link> */}
           <Link href="/contact" className="font-medium hover:text-primary">
             Contact
           </Link>
