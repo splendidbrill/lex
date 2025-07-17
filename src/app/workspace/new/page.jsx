@@ -189,6 +189,9 @@ export default function NewWorkspacePage() {
         return;
     }
 
+    console.log("Attempting to delete layout:", name);
+    console.log("Session user ID:", session.user.id);
+
     const { error } = await supabase
         .from('layouts')
         .delete()
@@ -203,6 +206,12 @@ export default function NewWorkspacePage() {
         delete newLayouts[name];
         setAllLayouts(newLayouts);
         showToast(`Layout "${name}" deleted.`);
+
+        // If the deleted layout was the currently active one, revert to default
+        if (currentLayoutName === name) {
+            setPanels(initialPanels);
+            setCurrentLayoutName("Default");
+        }
     }
   };
 
@@ -275,13 +284,13 @@ export default function NewWorkspacePage() {
                 </button>
             </div>
             <div className="flex space-x-2 relative">
-                <span className="text-sm font-medium mr-2 "> {currentLayoutName}</span>
+                <span className="text-sm font-medium mr-5 "> {currentLayoutName}</span>
                 <button onClick={openSaveModal} className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded">
                     <SaveIcon size={16} />
                     <span>Save layout</span>
                 </button>
                 <div className="relative">
-                    <button onClick={() => setShowDropdown(!showDropdown)} className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded">
+                    <button onClick={()=> setShowDropdown(!showDropdown)} className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded">
                         <LayoutIcon size={16} />
                         <span>All Saved Layouts</span>
                     </button>
