@@ -190,7 +190,7 @@ export default function NewWorkspacePage() {
                 ref={gridRef} 
                 onDrop={onDrop} 
                 onDragOver={(e) => e.preventDefault()} 
-                className="flex-grow relative p-4"
+                className="flex-grow relative grid grid-cols-4 grid-rows-4 gap-2 p-4"
                 style={{
                     backgroundImage: 'radial-gradient(circle, #334155 1px, transparent 1px)',
                     backgroundSize: '20px 20px',
