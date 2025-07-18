@@ -161,10 +161,14 @@ export default function SignUp() {
     return;
   }
 
+  const redirectTo = process.env.NODE_ENV === 'production'
+    ? 'https://lexlaunchcrew.com/welcome'
+    : `${window.location.origin}/welcome`;
+
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${window.location.origin}/welcome`,
+      redirectTo,
     },
   });
 
