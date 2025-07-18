@@ -1,131 +1,3 @@
-// "use client";
-// import React, { useState } from "react";
-// import Link from "next/link";
-
-// import Image from "next/image";
-
-// const Navbar = () => {
-//   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-//   const handleMenu = () => {
-//     setIsMenuOpen(!isMenuOpen);
-//   };
-//   return (
-//     <div>
-//       <nav className="p-3 flex bg-white justify-between items-center fixed top-0 left-0 right-0 z-20 shadow-md">
-//         <a href="#" id="brand" className="flex gap-2 items-center flex-1">
-//           <Image
-//             className="object-cover"
-//             src="/assets/asset 0.png"
-//             alt="Logo"
-//             width={48}
-//             height={48}
-//           />
-//           <span className="text-lg font-medium font-display">ToDesktop</span>
-//         </a>
-//         <div id="nav-menu" className="hidden lg:flex gap-12">
-//           <a href="#" className="font-medium hover:text-primary">
-//             Pricing
-//           </a>
-//           <a href="#" className="font-medium hover:text-primary">
-//             Docs
-//           </a>
-//           <a href="#" className="font-medium hover:text-primary">
-//             Changelog
-//           </a>
-//           <a href="#" className="font-medium hover:text-primary">
-//             Blogs
-//           </a>
-
-//           <Link href="/signin" className="font-medium hover:text-primary">
-//             Login
-//           </Link>
-
-//         </div>
-//         <div className="hidden lg:flex flex-1 justify-end">
-//           <Link href="/signup">
-
-//             <button className="flex gap-2 items-center border border-gray-400 px-6 py-2 rounded-lg hover:border-gray-600">
-//               <Image src="/assets/asset 1.svg" alt="" width={20} height={20} />
-//               <span className="font-display font-medium">
-//                 Sign Up
-//               </span>
-//               <i className="fa-solid fa-arrow-right"></i>
-//             </button>
-//           </Link>
-//         </div>
-
-//         <button className="p-2 lg:hidden" onClick={handleMenu}>
-//           <i className="fa-solid fa-bars text-gray-600"></i>
-//         </button>
-
-//         <div
-//           id="nav-dialog"
-//           className={`${isMenuOpen ? "" : "hidden"
-//             } fixed z-10 md:hidden bg-white inset-0 p-3`}
-//         >
-//           <div id="nav-bar" className="flex justify-between">
-//             <a href="#" id="brand" className="flex gap-2 items-center">
-//               <Image
-//                 className="object-cover"
-//                 src="/assets/asset 0.png"
-//                 alt="Logo"
-//                 width={48}
-//                 height={48}
-//               />
-//               <span className="text-lg font-medium font-display">
-//                 ToDesktop
-//               </span>
-//             </a>
-//             <button className="p-2 md:hidden" onClick={handleMenu}>
-//               <i className="fa-solid fa-xmark text-gray-600"></i>
-//             </button>
-//           </div>
-//           <div className="mt-6">
-//             <a
-//               href="#"
-//               className="font-medium m-3 p-3 hover:bg-gray-50 block rounded-lg"
-//             >
-//               Pricing
-//             </a>
-//             <a
-//               href="#"
-//               className="font-medium m-3 p-3 hover:bg-gray-50 block rounded-lg"
-//             >
-//               Docs
-//             </a>
-//             <a
-//               href="#"
-//               className="font-medium m-3 p-3 hover:bg-gray-50 block rounded-lg"
-//             >
-//               Changelog
-//             </a>
-//             <a
-//               href="#"
-//               className="font-medium m-3 p-3 hover:bg-gray-50 block rounded-lg"
-//             >
-//               Blogs
-//             </a>
-//             <a
-//               href="#"
-//               className="font-medium m-3 p-3 hover:bg-gray-50 block rounded-lg"
-//             >
-//               Login
-//             </a>
-//           </div>
-//           <div className="h-[1px] bg-gray-300"></div>
-//           <button className="mt-6 w-full flex gap-2 items-center  px-6 py-4 rounded-lg hover:bg-gray-50">
-//             <Image src="/assets/asset 1.svg" alt="" width={20} height={20} />
-//             <span>Sign Up</span>
-//           </button>
-//         </div>
-//       </nav>
-//     </div>
-//   )
-// }
-
-// export default Navbar
-
 "use client";
 import React, { useState, useEffect } from "react";
 import { SiAuth0 } from "react-icons/si";
@@ -231,90 +103,7 @@ const Navbar = () => {
           )}
         </button>
 
-        {/* Mobile Menu Drawer */}
-        <AnimatePresence>
-          {isMounted && isMenuOpen && (
-            <motion.div
-              key="mobile-nav"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.2 }}
-              className="fixed z-40 md:hidden bg-white inset-0 p-3"
-            >
-              <div className="flex justify-between items-center mb-6">
-                <Link href="/" className="flex gap-2 items-center">
-                  <Image
-                    className="object-cover"
-                    src="/assets/lexnav.png"
-                    alt="Logo"
-                    width={48}
-                    height={48}
-                  />
-                  <span className="text-lg font-medium font-display">
-                    LexBot
-                  </span>
-                </Link>
-                <button className="p-2" onClick={handleMenu}>
-                  <HiX className="text-gray-600 text-2xl" />
-                </button>
-              </div>
-
-              {/* Mobile Links */}
-              <div className="space-y-3">
-                <a
-                  href="#"
-                  className="block px-4 py-2 rounded-lg hover:bg-gray-100"
-                >
-                  Pricing
-                </a>
-                <Link
-                  href="/about"
-                  className="block px-4 py-2 rounded-lg hover:bg-gray-100"
-                >
-                  About
-                </Link>
-                <Link
-                  href="/blog"
-                  className="block px-4 py-2 rounded-lg hover:bg-gray-100"
-                >
-                  Blog
-                </Link>
-                <Link
-                  href="/contact"
-                  className="block px-4 py-2 rounded-lg hover:bg-gray-100"
-                >
-                  Contact
-                </Link>
-
-                {isMounted && !session ? (
-                  <>
-                    <Link
-                      href="/signin"
-                      className="block px-4 py-2  hover:bg-gray-100  rounded-lg"
-                    >
-                      Login
-                    </Link>
-                    <Link href="/signup">
-                      <button className="w-full mt-3 flex justify-center items-center gap-2 border border-gray-400 px-4 py-3 rounded-lg hover:bg-gray-50">
-                        <SiAuth0 />
-                        Sign Up
-                      </button>
-                    </Link>
-                  </>
-                ) : isMounted && session ? (
-                  <button
-                    onClick={handleLogout}
-                    className="block w-full px-4 py-2 text-left text-red-600 hover:bg-red-50 rounded-lg"
-                  >
-                    Logout
-                  </button>
-                ) : null}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </nav>
+        </nav>
 
       {/* Mobile Menu Drawer */}
       <AnimatePresence>
@@ -325,7 +114,7 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="fixed z-40 md:hidden bg-white inset-0 p-3"
+            className="fixed z-40 lg:hidden bg-white inset-0 p-3"
           >
             <div className="flex justify-between items-center mb-6">
               <Link href="/" className="flex gap-2 items-center">
@@ -347,55 +136,55 @@ const Navbar = () => {
 
             {/* Mobile Links */}
             <div className="space-y-3 text-center">
-              <a
-                href="#pricing"
-                className="block px-4 py-2 rounded-lg hover:bg-gray-100"
-              >
-                Pricing
-              </a>
-              <Link
-                href="/about"
-                className="block px-4 py-2 rounded-lg hover:bg-gray-100"
-              >
-                About
-              </Link>
-              <Link
-                href="/blog"
-                className="block px-4 py-2 rounded-lg hover:bg-gray-100"
-              >
-                Blog
-              </Link>
-              <Link
-                href="/contact"
-                className="block px-4 py-2 rounded-lg hover:bg-gray-100"
-              >
-                Contact
-              </Link>
+            <a
+              href="#pricing"
+              className="block px-4 py-2 rounded-lg hover:bg-gray-100"
+            >
+              Pricing
+            </a>
+            <Link
+              href="/about"
+              className="block px-4 py-2 rounded-lg hover:bg-gray-100"
+            >
+              About
+            </Link>
+            <Link
+              href="/blog"
+              className="block px-4 py-2 rounded-lg hover:bg-gray-100"
+            >
+              Blog
+            </Link>
+            <Link
+              href="/contact"
+              className="block px-4 py-2 rounded-lg hover:bg-gray-100"
+            >
+              Contact
+            </Link>
 
-              {isMounted && !session ? (
-                <>
-                  <Link
-                    href="/signin"
-                    className="block px-4 py-2  hover:bg-gray-100  rounded-lg"
-                  >
-                    Login
-                  </Link>
-                  <Link href="/signup">
-                    <button className="w-full mt-3 flex justify-center items-center gap-2 border border-gray-400 px-4 py-3 rounded-lg hover:bg-gray-50">
-                      <SiAuth0 />
-                      Sign Up
-                    </button>
-                  </Link>
-                </>
-              ) : isMounted && session ? (
-                <button
-                  onClick={handleLogout}
-                  className="block w-full px-4 py-2 text-left text-red-600 hover:bg-red-50 rounded-lg"
+            {isMounted && !session ? (
+              <>
+                <Link
+                  href="/signin"
+                  className="block px-4 py-2  hover:bg-gray-100  rounded-lg"
                 >
-                  Logout
-                </button>
-              ) : null}
-            </div>
+                  Login
+                </Link>
+                <Link href="/signup">
+                  <button className="w-full mt-3 flex justify-center items-center gap-2 border border-gray-400 px-4 py-3 rounded-lg hover:bg-gray-50">
+                    <SiAuth0 />
+                    Sign Up
+                  </button>
+                </Link>
+              </>
+            ) : isMounted && session ? (
+              <button
+                onClick={handleLogout}
+                className="block w-full px-4 py-2 text-left text-red-600 hover:bg-red-50 rounded-lg"
+              >
+                Logout
+              </button>
+            ) : null}
+          </div>
           </motion.div>
         )}
       </AnimatePresence>
