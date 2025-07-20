@@ -2,6 +2,13 @@
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import Chat from "@/app/components/Chat.jsx";
+
 
 const initialPanels = [
   { id: 1, title: "Follow up email", content: "Auto Generated ✨", x: 1, y: 2, z: 1, width: 200, height: 160 },
@@ -248,6 +255,18 @@ if (session === undefined || session === null) {
       )}
 
       {toast && <div className="fixed bottom-4 right-4 bg-black text-white px-4 py-2 rounded shadow-lg text-sm z-50">{toast}</div>}
+      <Drawer>
+        <DrawerTrigger asChild>
+          <button className={`fixed bottom-4 ${showSidebar ? 'left-[216px]' : 'left-4'} bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow-lg z-50`}>
+            Chat
+          </button>
+        </DrawerTrigger>
+        <DrawerContent>
+          <div className="h-[33vh]">
+            <Chat />
+          </div>
+        </DrawerContent>
+      </Drawer>
     </div>
   );
 }
