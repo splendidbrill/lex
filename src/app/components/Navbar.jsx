@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { SiAuth0 } from "react-icons/si";
+import { BiLogInCircle } from "react-icons/bi";
+
 import { HiMenu, HiX } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
@@ -68,7 +70,8 @@ const Navbar = () => {
             <>
               <Link href="/signin">
                 <button className="flex gap-2 items-center text-white bg-amber-500 border border-amber-400 px-6 py-2 rounded-lg hover:border-gray-600 cursor-pointer">
-                  <SiAuth0 />
+                  <BiLogInCircle />
+
                   <span className="font-display font-medium ">Login</span>
                 </button>
               </Link>
@@ -102,8 +105,7 @@ const Navbar = () => {
             <HiMenu className="text-gray-600 text-2xl" />
           )}
         </button>
-
-        </nav>
+      </nav>
 
       {/* Mobile Menu Drawer */}
       <AnimatePresence>
@@ -125,9 +127,7 @@ const Navbar = () => {
                   width={48}
                   height={48}
                 />
-                <span className="text-lg font-medium font-display">
-                  LexBot
-                </span>
+                <span className="text-lg font-medium font-display">LexBot</span>
               </Link>
               <button className="p-2" onClick={handleMenu}>
                 <HiX className="text-gray-600 text-2xl" />
@@ -136,55 +136,58 @@ const Navbar = () => {
 
             {/* Mobile Links */}
             <div className="space-y-3 text-center">
-            <a
-              href="#pricing"
-              className="block px-4 py-2 rounded-lg hover:bg-gray-100"
-            >
-              Pricing
-            </a>
-            <Link
-              href="/about"
-              className="block px-4 py-2 rounded-lg hover:bg-gray-100"
-            >
-              About
-            </Link>
-            <Link
-              href="/blog"
-              className="block px-4 py-2 rounded-lg hover:bg-gray-100"
-            >
-              Blog
-            </Link>
-            <Link
-              href="/contact"
-              className="block px-4 py-2 rounded-lg hover:bg-gray-100"
-            >
-              Contact
-            </Link>
-
-            {isMounted && !session ? (
-              <>
-                <Link
-                  href="/signin"
-                  className="block px-4 py-2  hover:bg-gray-100  rounded-lg"
-                >
-                  Login
-                </Link>
-                <Link href="/signup">
-                  <button className="w-full mt-3 flex justify-center items-center gap-2 border border-gray-400 px-4 py-3 rounded-lg hover:bg-gray-50">
-                    <SiAuth0 />
-                    Sign Up
-                  </button>
-                </Link>
-              </>
-            ) : isMounted && session ? (
-              <button
-                onClick={handleLogout}
-                className="block w-full px-4 py-2 text-left text-red-600 hover:bg-red-50 rounded-lg"
+              <a
+                href="#pricing"
+                className="block px-4 py-2 rounded-lg hover:bg-gray-100"
               >
-                Logout
-              </button>
-            ) : null}
-          </div>
+                Pricing
+              </a>
+              <Link
+                href="/about"
+                className="block px-4 py-2 rounded-lg hover:bg-gray-100"
+              >
+                About
+              </Link>
+              <Link
+                href="/blog"
+                className="block px-4 py-2 rounded-lg hover:bg-gray-100"
+              >
+                Blog
+              </Link>
+              <Link
+                href="/contact"
+                className="block px-4 py-2 rounded-lg hover:bg-gray-100"
+              >
+                Contact
+              </Link>
+
+              {isMounted && !session ? (
+                <>
+                  <Link
+                    href="/signin"
+                    
+                  >
+                    <button className="w-full mt-3 flex justify-center items-center gap-2 border border-gray-400 px-4 py-3 rounded-lg hover:bg-gray-50">
+                      <BiLogInCircle />
+                      Login
+                    </button>
+                  </Link>
+                  <Link href="/signup">
+                    <button className="w-full mt-3 flex justify-center items-center gap-2 border border-gray-400 px-4 py-3 rounded-lg hover:bg-gray-50">
+                      <SiAuth0 />
+                      Sign Up
+                    </button>
+                  </Link>
+                </>
+              ) : isMounted && session ? (
+                <button
+                  onClick={handleLogout}
+                  className="block w-full px-4 py-2 text-left text-red-600 hover:bg-red-50 rounded-lg"
+                >
+                  Logout
+                </button>
+              ) : null}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
