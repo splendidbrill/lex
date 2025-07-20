@@ -76,7 +76,7 @@ const Navbar = () => {
                 </button>
               </Link>
               <Link href="/signup">
-                <button className="flex gap-2 items-center border border-gray-400 px-6 py-2 rounded-lg hover:border-gray-600 cursor-pointer">
+                <button className="flex gap-2 items-center  border border-gray-400 px-6 py-2 rounded-lg hover:border-gray-600 cursor-pointer">
                   <SiAuth0 />
                   <span className="font-display font-medium">Sign Up</span>
                 </button>
@@ -173,7 +173,7 @@ const Navbar = () => {
                     </button>
                   </Link>
                   <Link href="/signup">
-                    <button className="w-full mt-3 flex justify-center items-center gap-2 border border-gray-400 px-4 py-3 rounded-lg hover:bg-gray-50">
+                    <button className="w-full mt-3 flex justify-center items-center text-white bg-blue-950 gap-2 border border-gray-400 px-4 py-3 rounded-lg hover:bg-gray-50 hover:text-black">
                       <SiAuth0 />
                       Sign Up
                     </button>
