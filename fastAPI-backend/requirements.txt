@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+crewai
+langchain
+openai
+# Include other dependencies like autogen ai libraries when you're ready

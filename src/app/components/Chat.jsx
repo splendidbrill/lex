@@ -407,11 +407,11 @@ export default function Chat() {
       className="w-full h-full bg-[var(--chat-bg-color)] rounded-2xl shadow-2xl flex flex-col font-['Inter',_sans-serif]"
     >
       {/* Header */}
-      <div id="chat-header" className="flex items-center justify-between p-4 bg-[var(--chat-primary-color)] text-white rounded-t-2xl">
-        <h3 className="font-bold text-lg">Chat with us</h3>
+      {/* <div id="chat-header" className="flex items-center justify-between p-4 bg-[var(--chat-primary-color)] text-white rounded-t-2xl"> */}
+        {/* <h3 className="font-bold text-lg">Chat with us</h3> */}
         {/* Close button is now handled by the Drawer component itself, if desired, or can be added here */}
         {/* For this integration, we assume the Drawer has its own close mechanism */}
-      </div>
+      {/* </div> */}
 
       {/* Message Body */}
       <div id="chat-body" ref={chatBodyRef} className="flex-1 p-4 overflow-y-auto custom-scrollbar space-y-4">
@@ -447,7 +447,7 @@ export default function Chat() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-            className="flex-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--chat-primary-color)] transition-shadow"
+            className="flex-1 w-full px-4 py-2 border text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--chat-primary-color)] transition-shadow"
             disabled={isLoading}
             aria-label="Type your message"
           />
