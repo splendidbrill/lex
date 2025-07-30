@@ -5,6 +5,7 @@ import { useState, useRef, useEffect } from "react";
 import { HomeIcon, LayoutIcon, SaveIcon, MenuIcon, XIcon } from "lucide-react";
 import Spinner from "../../components/Spinner";
 import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import Chat from "@/app/components/Chat";
 
 
 const initialPanels = [
@@ -33,6 +34,8 @@ export default function NewWorkspacePage() {
   const [toast, setToast] = useState("");
   const [allLayouts, setAllLayouts] = useState({});
   const [showModal, setShowModal] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(true);
+  const [showChatBox, setShowChatBox] = useState(false);
   const [layoutName, setLayoutName] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -450,6 +453,32 @@ export default function NewWorkspacePage() {
                 </div>
             </div>
         )}
+        {!showChatBox && (
+                <button
+                  className={`fixed bottom-4 ${isSidebarCollapsed ? "left-24" : "left-72"} bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow-lg z-50`}
+                  onClick={() => setShowChatBox(true)}
+                >
+                  Chat
+                </button>
+              )}
+              {showChatBox && (
+                <div
+                  className={`fixed bottom-4 ${isSidebarCollapsed ? "left-24" : "left-72"} w-[350px] h-[450px] bg-white rounded-2xl shadow-2xl flex flex-col z-50`}
+                >
+                  <div className="flex justify-between items-center p-2 bg-blue-600 text-white rounded-t-2xl">
+                    <span className="font-bold">Chat</span>
+                    <button
+                      onClick={() => setShowChatBox(false)}
+                      className="text-xl font-bold hover:text-gray-200"
+                    >
+                      ×
+                    </button>
+                  </div>
+                  <div className="flex-1 min-h-0">
+                    <Chat />
+                  </div>
+                </div>
+              )}
     </div>
   );
 }
