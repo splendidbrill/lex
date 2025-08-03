@@ -32,13 +32,13 @@ const Footer = () => {
               <p className="text-sm font-semibold text-gray-800 uppercase tracking-wider mb-4">Product</p>
               <ul className="space-y-3">
                 <li>
-                  <Link href="#" className="text-base text-gray-600 hover:text-gray-900 font-inter transition-colors duration-200">Features</Link>
+                  <Link href="#" className="text-base text-gray-600 hover:text-gray-900 font-inter transition-colors duration-200"></Link>
                 </li>
                 <li>
                   <Link href="#" className="text-base text-gray-600 hover:text-gray-900 font-inter transition-colors duration-200">Pricing</Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-base text-gray-600 hover:text-gray-900 font-inter transition-colors duration-200">Automation</Link>
+                  <Link href="#" className="text-base text-gray-600 hover:text-gray-900 font-inter transition-colors duration-200"></Link>
                 </li>
               </ul>
             </div>
@@ -63,7 +63,7 @@ const Footer = () => {
                   <Link href="https://app.termly.io/policy-viewer/policy.html?policyUUID=18acfba8-713a-4e53-aa03-d681624602b4" className="text-base text-gray-600 hover:text-gray-900 font-inter transition-colors duration-200">Privacy Policy</Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-base text-gray-600 hover:text-gray-900 font-inter transition-colors duration-200">Terms of Service</Link>
+                  <Link href="#" className="text-base text-gray-600 hover:text-gray-900 font-inter transition-colors duration-200"></Link>
                 </li>
               </ul>
             </div>
