@@ -161,7 +161,7 @@ useEffect(() => {
             </div>
 
             <p className="text-xl mt-8 sm:text-2xl sm:mt-8 text-gray-800">
-              Your AI enhanced command center, cofounder and mentor.
+              Your AI enhanced mentor, command center, and cofounder.
             </p>
             <div
               id="buttons-container"
