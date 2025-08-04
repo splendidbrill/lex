@@ -50,7 +50,7 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden lg:flex gap-12 items-center">
-          <a href="#" className="font-medium hover:text-primary">
+          <a href="#pricing" className="font-medium hover:text-primary">
             Pricing
           </a>
           <Link href="/about" className="font-medium hover:text-primary">
@@ -139,24 +139,28 @@ const Navbar = () => {
               <a
                 href="#pricing"
                 className="block px-4 py-2 rounded-lg hover:bg-gray-100"
+                onClick={handleMenu}
               >
                 Pricing
               </a>
               <Link
                 href="/about"
                 className="block px-4 py-2 rounded-lg hover:bg-gray-100"
+                onClick={handleMenu}
               >
                 About
               </Link>
               <Link
                 href="/blog"
                 className="block px-4 py-2 rounded-lg hover:bg-gray-100"
+                onClick={handleMenu}
               >
                 Blog
               </Link>
               <Link
                 href="/contact"
                 className="block px-4 py-2 rounded-lg hover:bg-gray-100"
+                onClick={handleMenu}
               >
                 Contact
               </Link>
@@ -165,14 +169,14 @@ const Navbar = () => {
                 <>
                   <Link
                     href="/signin"
-                    
+                    onClick={handleMenu}
                   >
                     <button className="w-full mt-3 flex justify-center items-center gap-2 border border-gray-400 px-4 py-3 rounded-lg hover:bg-gray-50">
                       <BiLogInCircle />
                       Login
                     </button>
                   </Link>
-                  <Link href="/signup">
+                  <Link href="/signup" onClick={handleMenu}>
                     <button className="w-full mt-3 flex justify-center items-center text-white bg-blue-950 gap-2 border border-gray-400 px-4 py-3 rounded-lg hover:bg-gray-50 hover:text-black">
                       <SiAuth0 />
                       Sign Up
