@@ -339,10 +339,10 @@ export default function NewWorkspacePage() {
                 className={`bg-gray-800 p-3 border-r border-gray-700 overflow-y-auto transition-all duration-300 flex flex-col ${isSidebarCollapsed ? 'w-16' : 'w-64'}`}
             >
                 <h2 className={`text-lg font-semibold mb-2 ${isSidebarCollapsed ? 'hidden' : ''}`}>AI Agents</h2>
-                <ul className="space-y-2 text-sm">
+                <ul className="space-y-1 text-sm">
                     {aiAgents.map((a) => (
-                        <li key={a.id} className="flex items-center space-x-2">
-                            <img src={a.icon} alt={a.label} className="w-8 h-8" />
+                        <li key={a.id} className="flex items-center space-x-2 p-1 rounded hover:bg-gray-700 transition-colors duration-200 cursor-pointer">
+                            <img src={a.icon} alt={a.label} className="w-6 h-6" />
                             {!isSidebarCollapsed && <span>{a.label}</span>}
                         </li>
                     ))}

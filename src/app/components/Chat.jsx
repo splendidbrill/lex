@@ -292,7 +292,8 @@ export default function Chat() {
   // Configuration for the chat widget (can be moved to props for more flexibility if needed)
   const config = {
     webhook: {
-      url: 'https://n8nlex-edcrcmbyc3epc5e0.canadacentral-01.azurewebsites.net/webhook/9cf400c3-2fd1-4828-9b27-76a01ffd463d/chat',
+      // url: 'https://n8nlex-edcrcmbyc3epc5e0.canadacentral-01.azurewebsites.net/webhook/2bafc605-a4af-46cb-832b-8b59c1dbb4c4/chat',
+      url: 'https://n8nlex-edcrcmbyc3epc5e0.canadacentral-01.azurewebsites.net/webhook/299b1219-cb0a-42ba-a9dd-f3b5051450a9/chat',
       route: 'general'
     },
     style: {
@@ -422,7 +423,7 @@ export default function Chat() {
                 ? 'bg-[var(--chat-primary-color)] text-white rounded-br-none'
                 : 'bg-gray-200 text-gray-800 rounded-bl-none'
             }`}>
-              <p className="font-semibold text-sm mb-1">{msg.sender === 'user' ? 'You' : 'Support Bot'}</p>
+              <p className="font-semibold text-sm mb-1">{msg.sender === 'user' ? 'You' : 'Lex Bot'}</p>
               <p className="text-base">{msg.text}</p>
             </div>
           </div>
