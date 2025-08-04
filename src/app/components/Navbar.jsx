@@ -129,6 +129,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { SiAuth0 } from "react-icons/si";
+import { BiLogInCircle } from "react-icons/bi";
+
 import { HiMenu, HiX } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
@@ -176,7 +178,7 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden lg:flex gap-12 items-center">
-          <a href="#" className="font-medium hover:text-primary">
+          <a href="#pricing" className="font-medium hover:text-primary">
             Pricing
           </a>
           <Link href="/about" className="font-medium hover:text-primary">
@@ -196,12 +198,13 @@ const Navbar = () => {
             <>
               <Link href="/signin">
                 <button className="flex gap-2 items-center text-white bg-amber-500 border border-amber-400 px-6 py-2 rounded-lg hover:border-gray-600 cursor-pointer">
-                  <SiAuth0 />
+                  <BiLogInCircle />
+
                   <span className="font-display font-medium ">Login</span>
                 </button>
               </Link>
               <Link href="/signup">
-                <button className="flex gap-2 items-center border border-gray-400 px-6 py-2 rounded-lg hover:border-gray-600 cursor-pointer">
+                <button className="flex gap-2 items-center  border border-gray-400 px-6 py-2 rounded-lg hover:border-gray-600 cursor-pointer">
                   <SiAuth0 />
                   <span className="font-display font-medium">Sign Up</span>
                 </button>
@@ -230,90 +233,6 @@ const Navbar = () => {
             <HiMenu className="text-gray-600 text-2xl" />
           )}
         </button>
-
-        {/* Mobile Menu Drawer */}
-        <AnimatePresence>
-          {isMounted && isMenuOpen && (
-            <motion.div
-              key="mobile-nav"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.2 }}
-              className="fixed z-40 md:hidden bg-white inset-0 p-3"
-            >
-              <div className="flex justify-between items-center mb-6">
-                <Link href="/" className="flex gap-2 items-center">
-                  <Image
-                    className="object-cover"
-                    src="/assets/lexnav.png"
-                    alt="Logo"
-                    width={48}
-                    height={48}
-                  />
-                  <span className="text-lg font-medium font-display">
-                    LexBot
-                  </span>
-                </Link>
-                <button className="p-2" onClick={handleMenu}>
-                  <HiX className="text-gray-600 text-2xl" />
-                </button>
-              </div>
-
-              {/* Mobile Links */}
-              <div className="space-y-3">
-                <a
-                  href="#"
-                  className="block px-4 py-2 rounded-lg hover:bg-gray-100"
-                >
-                  Pricing
-                </a>
-                <Link
-                  href="/about"
-                  className="block px-4 py-2 rounded-lg hover:bg-gray-100"
-                >
-                  About
-                </Link>
-                <Link
-                  href="/blog"
-                  className="block px-4 py-2 rounded-lg hover:bg-gray-100"
-                >
-                  Blog
-                </Link>
-                <Link
-                  href="/contact"
-                  className="block px-4 py-2 rounded-lg hover:bg-gray-100"
-                >
-                  Contact
-                </Link>
-
-                {isMounted && !session ? (
-                  <>
-                    <Link
-                      href="/signin"
-                      className="block px-4 py-2  hover:bg-gray-100  rounded-lg"
-                    >
-                      Login
-                    </Link>
-                    <Link href="/signup">
-                      <button className="w-full mt-3 flex justify-center items-center gap-2 border border-gray-400 px-4 py-3 rounded-lg hover:bg-gray-50">
-                        <SiAuth0 />
-                        Sign Up
-                      </button>
-                    </Link>
-                  </>
-                ) : isMounted && session ? (
-                  <button
-                    onClick={handleLogout}
-                    className="block w-full px-4 py-2 text-left text-red-600 hover:bg-red-50 rounded-lg"
-                  >
-                    Logout
-                  </button>
-                ) : null}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </nav>
 
       {/* Mobile Menu Drawer */}
@@ -325,7 +244,7 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="fixed z-40 md:hidden bg-white inset-0 p-3"
+            className="fixed z-40 lg:hidden bg-white inset-0 p-3"
           >
             <div className="flex justify-between items-center mb-6">
               <Link href="/" className="flex gap-2 items-center">
@@ -336,9 +255,7 @@ const Navbar = () => {
                   width={48}
                   height={48}
                 />
-                <span className="text-lg font-medium font-display">
-                  LexBot
-                </span>
+                <span className="text-lg font-medium font-display">LexBot</span>
               </Link>
               <button className="p-2" onClick={handleMenu}>
                 <HiX className="text-gray-600 text-2xl" />
@@ -350,24 +267,28 @@ const Navbar = () => {
               <a
                 href="#pricing"
                 className="block px-4 py-2 rounded-lg hover:bg-gray-100"
+                onClick={handleMenu}
               >
                 Pricing
               </a>
               <Link
                 href="/about"
                 className="block px-4 py-2 rounded-lg hover:bg-gray-100"
+                onClick={handleMenu}
               >
                 About
               </Link>
               <Link
                 href="/blog"
                 className="block px-4 py-2 rounded-lg hover:bg-gray-100"
+                onClick={handleMenu}
               >
                 Blog
               </Link>
               <Link
                 href="/contact"
                 className="block px-4 py-2 rounded-lg hover:bg-gray-100"
+                onClick={handleMenu}
               >
                 Contact
               </Link>
@@ -376,12 +297,15 @@ const Navbar = () => {
                 <>
                   <Link
                     href="/signin"
-                    className="block px-4 py-2  hover:bg-gray-100  rounded-lg"
+                    onClick={handleMenu}
                   >
-                    Login
-                  </Link>
-                  <Link href="/signup">
                     <button className="w-full mt-3 flex justify-center items-center gap-2 border border-gray-400 px-4 py-3 rounded-lg hover:bg-gray-50">
+                      <BiLogInCircle />
+                      Login
+                    </button>
+                  </Link>
+                  <Link href="/signup" onClick={handleMenu}>
+                    <button className="w-full mt-3 flex justify-center items-center text-white bg-blue-950 gap-2 border border-gray-400 px-4 py-3 rounded-lg hover:bg-gray-50 hover:text-black">
                       <SiAuth0 />
                       Sign Up
                     </button>
