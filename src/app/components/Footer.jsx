@@ -32,13 +32,13 @@ const Footer = () => {
               <p className="text-sm font-semibold text-gray-800 uppercase tracking-wider mb-4">Product</p>
               <ul className="space-y-3">
                 <li>
-                  <Link href="#" className="text-base text-gray-600 hover:text-gray-900 font-inter transition-colors duration-200">Features</Link>
+                  {/* <Link href="#" className="text-base text-gray-600 hover:text-gray-900 font-inter transition-colors duration-200">Features</Link> */}
                 </li>
                 <li>
                   <Link href="#" className="text-base text-gray-600 hover:text-gray-900 font-inter transition-colors duration-200">Pricing</Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-base text-gray-600 hover:text-gray-900 font-inter transition-colors duration-200">Automation</Link>
+                  {/* <Link href="#" className="text-base text-gray-600 hover:text-gray-900 font-inter transition-colors duration-200">Automation</Link> */}
                 </li>
               </ul>
             </div>
