@@ -171,7 +171,7 @@ const Navbar = () => {
             height={48}
           />
 
-          <span className="text-lg font-medium font-display">LexBot</span>
+          <span className="text-lg font-medium font-display">LexLaunchCrew</span>
         </Link>
 
         {/* Desktop Menu */}
