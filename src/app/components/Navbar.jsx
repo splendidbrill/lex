@@ -141,6 +141,7 @@ import { useRouter } from "next/navigation";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const session = useSession();
   const supabase = useSupabaseClient();
@@ -148,6 +149,20 @@ const Navbar = () => {
 
   useEffect(() => {
     setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      if (scrollTop > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleMenu = () => {
@@ -162,7 +177,11 @@ const Navbar = () => {
 
   return (
     <div className="fixed top-0 left-0 right-0 z-20 flex justify-center">
-      <nav className="w-full p-3 flex justify-between items-center backdrop-blur-md bg-white/60 transition-all duration-300 border-b-2 border-gray-200/50 shadow-lg lg:w-[90%] lg:rounded-full lg:border-2 lg:mt-4">
+      <nav className={`w-full p-3 flex justify-between items-center backdrop-blur-md bg-white/60 transition-all duration-500 border-b-2 border-gray-200/50 shadow-lg ${
+        scrolled 
+          ? 'lg:w-[90%] lg:rounded-2xl lg:border-2 lg:mt-4' 
+          : 'lg:w-full lg:rounded-none lg:border-b-2 lg:mt-0'
+      }`}>
         {/* Brand */}
         <Link href="/" className="flex gap-2 items-center flex-1">
           <Image
